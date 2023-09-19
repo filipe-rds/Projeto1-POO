@@ -94,7 +94,7 @@ public class Excursao {
 	            }
 
 	            if (!separacao[1].equals(nome)) {
-	                
+	                codnome = 10;
 	            }
 	            if (separacao[1].equals(nome) || codconfirmacao == 5) {
 	                listaReserva.remove(i);
