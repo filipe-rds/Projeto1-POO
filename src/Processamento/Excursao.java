@@ -68,6 +68,7 @@ public class Excursao {
 			
 			listaReserva.add(cpf + "/" + nome);
 			
+			
 		}
 		else{
 			throw new Exception("Limite excedido");
@@ -75,77 +76,67 @@ public class Excursao {
 	}
 	// Methods
 
-	public void cancelarReserva(String cpf, String nome) throws Exception {
-	    int codcpf = 0;
-	    int codnome = 0;
-	    int codconfirmacao = 0;
-	    int i = 0;
-	    
-	    while (i < listaReserva.size()) {
-	        String temp = listaReserva.get(i);
-	        String[] separacao = temp.split("/");
-	        codnome = 0;
-	        codcpf = 0;
+	 public void cancelarReserva(String cpf, String nome) throws Exception {
+	        boolean encontrou = false;
+	        boolean cpfInvalido = true;
+	        boolean nomeInvalido = true;
 
-	        if (separacao[0].equals(cpf)) {
-	            codconfirmacao = 5; // Existe o CPF OK
-	            codcpf = 0;
-	        } else {
-	            codcpf = 5; // Não existe o cpf
+	        for (int i = 0; i < listaReserva.size(); i++) {
+	            String reserva = listaReserva.get(i);
+	            String[] separacao = reserva.split("/");
+
+	            if (separacao[0].equals(cpf) && separacao[1].equals(nome)) {
+	                listaReserva.remove(i);
+	                encontrou = true;
+	                break;
+	            } else if (separacao[0].equals(cpf)) {
+	                cpfInvalido = false;
+	            } else if (separacao[1].equals(nome)) {
+	                nomeInvalido = false;
+	            }
 	        }
 
-	        if (!separacao[1].equals(nome)) {
-	            codnome = 10;
+	        if (!encontrou) {
+	            if (!cpfInvalido && !nomeInvalido) {
+	                throw new Exception("Não existe reserva com esse CPF e nome.");
+	            } else if (!cpfInvalido) {
+	                throw new Exception("Não existe esse Nome");
+	            } else if (!nomeInvalido) {
+	                throw new Exception("Não existe esse CPF");
+	            } else {
+	                throw new Exception("Não existe reserva com esse CPF e nome.");
+	            }
 	        }
-
-	        if (separacao[1].equals(nome) || codconfirmacao == 5) {
-	            listaReserva.remove(i);
-	        } else {
-	            i++;
-	        }
 	    }
-
-	    if (codcpf == 5 && codnome == 10) {
-	        throw new Exception("Não existe esse cpf, e esse nome");
-	    }
-	    if (codcpf == 5 && codnome == 0) {
-	        throw new Exception("Não existe esse cpf");
-	    }
-	    if (codcpf == 0 && codnome == 10) {
-	        throw new Exception("Não existe esse nome");
-	    }
-
-	    if (listaReserva.isEmpty()) {
-	        throw new Exception("Não é possível remover, pois a lista está vazia");
-	    }
-	}
-
 	
 	public void cancelarReserva(String cpf) throws Exception {
-	    int i = 0;
-	    boolean cpfEncontrado = false;
-	    while (i < listaReserva.size()) {
+	    boolean entrou = false;
+	    
+	    if (listaReserva.size() <=0 ) {
+	    	throw new Exception("Lista vazia");
+	    }
+
+	    for (int i = listaReserva.size() - 1; i >= 0; i--) {
 	        String temp = listaReserva.get(i);
 	        String[] separacao = temp.split("/");
+
 	        if (separacao[0].equals(cpf)) {
 	            listaReserva.remove(i);
-	            cpfEncontrado = true;;
-	            System.out.println(listaReserva.size());
-	        } else {
-	            i++; 
+	            entrou = true;
 	        }
-	        
-	        if (!cpfEncontrado) {
-	            throw new Exception("Não existe esse CPF na listaaa");
-	        }
-	        if (listaReserva.size()<=0) {
-	        	throw new Exception("Não é possível remover, pois a lista está vaziaaa");
-	        }
-		
+	    }
+
+	    if (!entrou) {
+	        throw new Exception("Não existe esse cpf");
+	    }
+	    
+	    
 	}
 	
+	
+
 
 		
-	}}
+	}
 		
 		
