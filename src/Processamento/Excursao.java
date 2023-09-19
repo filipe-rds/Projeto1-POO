@@ -77,9 +77,14 @@ public class Excursao {
 	// Methods
 
 	 public void cancelarReserva(String cpf, String nome) throws Exception {
-	        boolean encontrou = false;
+		 	if (listaReserva.isEmpty()) {
+		 		throw new Exception("Não há registros de reversa no sistema");
+		 	}
+		 	
+		 	boolean encontrou = false;
 	        boolean cpfInvalido = true;
 	        boolean nomeInvalido = true;
+	       
 
 	        for (int i = 0; i < listaReserva.size(); i++) {
 	            String reserva = listaReserva.get(i);
@@ -103,8 +108,6 @@ public class Excursao {
 	                throw new Exception("Não existe esse Nome");
 	            } else if (!nomeInvalido) {
 	                throw new Exception("Não existe esse CPF");
-	            } else {
-	                throw new Exception("Não existe reserva com esse CPF e nome.");
 	            }
 	        }
 	    }
@@ -129,8 +132,6 @@ public class Excursao {
 	    if (!entrou) {
 	        throw new Exception("Não existe esse cpf");
 	    }
-	    
-	    
 	}
 	
 	

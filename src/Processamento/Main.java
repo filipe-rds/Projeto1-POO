@@ -7,7 +7,7 @@ public class Main {
 		Excursao teste = new Excursao(1337,18000.0, 10);
 		try {
 			teste.criarReserva("123","Felipe");
-			teste.cancelarReserva("123","Felip"); 
+			teste.cancelarReserva("123","Felipe"); 
 			
 			;
 		}catch(Exception f){
@@ -18,8 +18,8 @@ public class Main {
 		
 		try {
 			
-			teste.cancelarReserva("123","Felipe"); 
-			teste.cancelarReserva("123","Feliyy"); 
+			teste.criarReserva("123","Felipe"); 
+			teste.cancelarReserva("124"); 
 			   
 			 
 		}
