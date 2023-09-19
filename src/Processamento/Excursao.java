@@ -116,15 +116,21 @@ public class Excursao {
 	
 	public void cancelarReserva(String cpf) throws Exception {
 	    int i = 0;
+		boolean cpfEncontrado = false;
 	    while (i < listaReserva.size()) {
 	        String temp = listaReserva.get(i);
 	        String[] separacao = temp.split("/");
 	        if (separacao[0].equals(cpf)) {
 	            listaReserva.remove(i);
+				cpfEncontrado = true;
 	            System.out.println(listaReserva.size());
 	        } else {
 	            i++; 
 	        }
+
+			if (!cpfEncontrado){
+				throw new Exception("Não existe esse CPF na listaaa");
+			}
 	        if (listaReserva.size()<=0) {
 	        	throw new Exception("Não é possível remover, pois a lista está vaziaaa");
 	        }
