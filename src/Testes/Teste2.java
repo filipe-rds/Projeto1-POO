@@ -1,13 +1,12 @@
 package Testes;
-
-/**
- * TSI - POO - Prof. Fausto projeto1
- */
-
 import Processamento.Excursao;
 
+/*
+  TSI - POO - Prof. Fausto projeto1
+*/
+
 public class Teste2 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
 		// ------------Teste das exceções --------------------
 		try {

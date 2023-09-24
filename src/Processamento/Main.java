@@ -2,7 +2,7 @@ package Processamento;
 
 public class Main {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args)  throws Exception{
 		
 		Excursao teste = new Excursao(1337,18000.0, 10);
 		try {

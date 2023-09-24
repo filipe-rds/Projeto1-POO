@@ -1,13 +1,12 @@
 package Testes;
+import Processamento.Excursao;
 
-/**
- * TSI - POO - Prof. Fausto projeto1
- */
-
-//import Processamento.Excursao;
+/*
+  TSI - POO - Prof. Fausto projeto1
+*/
 
 public class Teste1 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		try {
 			Excursao excursao = new Excursao(1234, 100.0, 20);
 			System.out.println("excursao:" + excursao);
