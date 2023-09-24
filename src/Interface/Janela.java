@@ -254,6 +254,10 @@ public class Janela {
 				String nome = "";
 
 				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -265,6 +269,7 @@ public class Janela {
 						} catch (Exception a) {
 							return;
 						}
+
 						if (cpf.isEmpty()) {
 							throw new Exception("O CPF deve conter pelo menos um número.");
 
@@ -316,6 +321,11 @@ public class Janela {
 				String cpf = "";
 
 				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
+
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -365,6 +375,11 @@ public class Janela {
 				textArea.setText("");
 
 				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
+
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -409,6 +424,10 @@ public class Janela {
 				textArea.setText("");
 
 				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
 
 					try {
 						nome = JOptionPane.showInputDialog(frame, "Digite o nome").toUpperCase();
@@ -454,6 +473,11 @@ public class Janela {
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
+
 					double total = excursao.calcularValorTotal();
 					JOptionPane.showMessageDialog(frame, "O valor total da excursão: R$" + total);
 				} else {
