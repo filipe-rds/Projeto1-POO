@@ -32,7 +32,7 @@ public class Janela {
 	private JTextArea textArea;
 
 	private Excursao excursao;
-	boolean excursaoSelecionada = false;
+	private boolean excursaoSelecionada = false;
 
 	/**
 	 * Launch the application.
@@ -125,11 +125,11 @@ public class Janela {
 					label_1.setText(codstr);
 					excursaoSelecionada = true;
 
-				} catch (NumberFormatException ex) {
+				} catch (NumberFormatException a) {
 					JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.");
 
-				} catch (Exception g) {
-					JOptionPane.showMessageDialog(frame, "Erro: " + g.getMessage());
+				} catch (Exception b) {
+					JOptionPane.showMessageDialog(frame, "Erro: " + b.getMessage());
 				}
 			}
 		});
@@ -167,10 +167,10 @@ public class Janela {
 					label_1.setText(codstr);
 					excursaoSelecionada = true;
 
-				} catch (NumberFormatException exx) {
+				} catch (NumberFormatException a) {
 					JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.");
-				} catch (Exception gg) {
-					JOptionPane.showMessageDialog(frame, gg.getMessage());
+				} catch (Exception b) {
+					JOptionPane.showMessageDialog(frame, b.getMessage());
 				}
 			}
 		}
@@ -198,7 +198,7 @@ public class Janela {
 						try {
 							cpf = input.replaceAll("[^0-9]", "");
 
-						} catch (Exception u) {
+						} catch (Exception a) {
 							return;
 						}
 						if (cpf.isEmpty()) {
@@ -206,12 +206,12 @@ public class Janela {
 
 						}
 
-					} catch (NumberFormatException exxx) {
+					} catch (NumberFormatException b) {
 						JOptionPane.showMessageDialog(frame, "Erro: Por favor, insira valores numéricos válidos");
 						return;
 
-					} catch (Exception p) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + p.getMessage());
+					} catch (Exception c) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + c.getMessage());
 						return;
 					}
 
@@ -230,8 +230,8 @@ public class Janela {
 						excursao.criarReserva(cpf, nome);
 						excursao.salvar();
 
-					} catch (Exception x) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + x.getMessage());
+					} catch (Exception d) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + d.getMessage());
 						return;
 					}
 
@@ -262,7 +262,7 @@ public class Janela {
 						try {
 							cpf = input.replaceAll("[^0-9]", "");
 
-						} catch (Exception u) {
+						} catch (Exception a) {
 							return;
 						}
 						if (cpf.isEmpty()) {
@@ -270,12 +270,12 @@ public class Janela {
 
 						}
 
-					} catch (NumberFormatException exxx) {
+					} catch (NumberFormatException b) {
 						JOptionPane.showMessageDialog(frame, "Erro: Por favor, insira valores numéricos válidos");
 						return;
 
-					} catch (Exception p) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + p.getMessage());
+					} catch (Exception c) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + c.getMessage());
 						return;
 					}
 
@@ -385,8 +385,8 @@ public class Janela {
 
 						textArea.setVisible(true);
 
-					} catch (Exception a) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + a.getMessage());
+					} catch (Exception b) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + b.getMessage());
 						return;
 
 					}
@@ -455,7 +455,7 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 				if (excursaoSelecionada) {
 					double total = excursao.calcularValorTotal();
-					JOptionPane.showMessageDialog(frame, "O valor total da excursão é de R$" + total);
+					JOptionPane.showMessageDialog(frame, "O valor total da excursão: R$" + total);
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
