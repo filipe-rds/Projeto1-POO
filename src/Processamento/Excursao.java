@@ -189,18 +189,16 @@ public class Excursao {
 
 			} else {
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
-				boolean cpfEncontrado = false;
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
 					String[] separacao = reserva.split("/");
-					cpfEncontrado = separacao[0].contains(digitos);
 
-					if (cpfEncontrado) {
+					if (separacao[0].contains(digitos)) {
 						registrosEncontrados.add(reserva);
 					}
 				}
-				if (!cpfEncontrado) {
+				if (registrosEncontrados.isEmpty()) {
 					throw new Exception("A sequência de dígitos não foi encontrada na lista de reservas");
 				}
 				return registrosEncontrados;
@@ -222,18 +220,17 @@ public class Excursao {
 				return registroTotal;
 			} else {
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
-				boolean nomeEncontrado = false;
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
 					String[] separacao = reserva.split("/");
-					nomeEncontrado = separacao[1].contains(texto);
-					if (nomeEncontrado) {
+
+					if (separacao[1].contains(texto)) {
 						registrosEncontrados.add(reserva);
 					}
 				}
 
-				if (!nomeEncontrado) {
+				if (registrosEncontrados.isEmpty()) {
 					throw new Exception("A sequência de caracteres não foi encontrada na lista de reservas");
 				}
 				return registrosEncontrados;
@@ -314,7 +311,6 @@ public class Excursao {
 
 	public double calcularValorTotal() {
 		double valorTotal = this.preco * listaReserva.size();
-		// System.out.println(valorTotal);
 		return valorTotal;
 	}
 
