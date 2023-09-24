@@ -114,12 +114,11 @@ public class Janela {
 
 					max = Integer.parseInt(maxStr);
 
-					Excursao teste1 = new Excursao(codigo, preco, max);
-
-					teste1.existe();
-
-					excursao = teste1;
+					Excursao temp = new Excursao(codigo, preco, max);
+					excursao = temp;
+					excursao.existe();
 					excursao.salvar();
+
 					JOptionPane.showMessageDialog(frame, "Sua excursão foi criada com sucesso.");
 					String codstr = String.valueOf(codigo);
 					label_1.setText(codstr);
@@ -144,7 +143,9 @@ public class Janela {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int codigo;
+				ArrayList<String> lista = new ArrayList<>();
 				textArea.setText("");
+
 				try {
 
 					String codigoStr = JOptionPane.showInputDialog(frame, "Digite o código para recuperar");
@@ -154,18 +155,22 @@ public class Janela {
 
 					codigo = Integer.parseInt(codigoStr);
 
-					Excursao teste2 = new Excursao(codigo);
-
-					teste2.naoExiste();
-					teste2.ler();
-
-					excursao = teste2;
+					Excursao temp = new Excursao(codigo);
+					excursao = temp;
+					excursao.naoExiste();
+					excursao.ler();
 
 					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
 
 					String codstr = String.valueOf(codigo);
 					label_1.setText(codstr);
 					excursaoSelecionada = true;
+
+					lista = excursao.listarReservasPorNome("");
+					for (String str : lista) {
+						textArea.append(str + "\n");
+					}
+					textArea.setVisible(true);
 
 				} catch (NumberFormatException a) {
 					JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.");
@@ -222,7 +227,8 @@ public class Janela {
 							return;
 						}
 						if (!nome.matches("^(?U)[\\p{L}\\s]+$") || nome.matches(".*\\s{2,}.*")) {
-							throw new Exception("O nome deve conter apenas letras, espaços e não pode ter espaços consecutivos.");
+							throw new Exception(
+									"O nome deve conter apenas letras, espaços e não pode ter espaços consecutivos.");
 						}
 
 						excursao.criarReserva(cpf, nome);
@@ -252,7 +258,7 @@ public class Janela {
 				String nome = "";
 
 				if (excursaoSelecionada) {
-					if(excursao.getListaReserva().isEmpty()) {
+					if (excursao.getListaReserva().isEmpty()) {
 						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
 						return;
 					}
@@ -267,7 +273,7 @@ public class Janela {
 						} catch (Exception a) {
 							return;
 						}
-						
+
 						if (cpf.isEmpty()) {
 							throw new Exception("O CPF deve conter pelo menos um número.");
 
@@ -289,9 +295,9 @@ public class Janela {
 							return;
 						}
 						if (!nome.matches("^(?U)[\\p{L}\\s]+$") || nome.matches(".*\\s{2,}.*")) {
-						    throw new Exception("O nome deve conter apenas letras, espaços e não pode ter espaços consecutivos.");
+							throw new Exception(
+									"O nome deve conter apenas letras, espaços e não pode ter espaços consecutivos.");
 						}
-
 
 						excursao.cancelarReserva(cpf, nome);
 						excursao.salvar();
@@ -318,11 +324,11 @@ public class Janela {
 				String cpf = "";
 
 				if (excursaoSelecionada) {
-					if(excursao.getListaReserva().isEmpty()) {
+					if (excursao.getListaReserva().isEmpty()) {
 						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
 						return;
 					}
-					
+
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -372,11 +378,11 @@ public class Janela {
 				textArea.setText("");
 
 				if (excursaoSelecionada) {
-					if(excursao.getListaReserva().isEmpty()) {
+					if (excursao.getListaReserva().isEmpty()) {
 						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
 						return;
 					}
-					
+
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -421,7 +427,7 @@ public class Janela {
 				textArea.setText("");
 
 				if (excursaoSelecionada) {
-					if(excursao.getListaReserva().isEmpty()) {
+					if (excursao.getListaReserva().isEmpty()) {
 						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
 						return;
 					}
@@ -470,11 +476,11 @@ public class Janela {
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (excursaoSelecionada) {
-					if(excursao.getListaReserva().isEmpty()) {
+					if (excursao.getListaReserva().isEmpty()) {
 						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
 						return;
 					}
-					
+
 					double total = excursao.calcularValorTotal();
 					JOptionPane.showMessageDialog(frame, "O valor total da excursão: R$" + total);
 				} else {
