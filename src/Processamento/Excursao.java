@@ -110,7 +110,7 @@ public class Excursao {
 			for (int i = 0; i < listaReserva.size(); i++) {
 				// String temp = listaReserva.get(i);
 				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
-				if (separacao[1].equals(nome)) {
+				if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
 					throw new Exception("Nome já está cadastrado");
 				}
 			}
@@ -129,13 +129,13 @@ public class Excursao {
 			for (int i = 0; i < listaReserva.size(); i++) {
 				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
-				if (separacao[0].equals(cpf) && separacao[1].equals(nome)) {
+				if (separacao[0].equals(cpf) && separacao[1].toUpperCase().equals(nome.toUpperCase())) {
 					listaReserva.remove(i);
 					cancelamentoValido = true;
 					break;
 				} else if (separacao[0].equals(cpf)) {
 					cpfValido = true;
-				} else if (separacao[1].equals(nome)) {
+				} else if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
 					nomeValido = true;
 				}
 			}
@@ -225,7 +225,7 @@ public class Excursao {
 					String reserva = listaReserva.get(i);
 					String[] separacao = reserva.split("/");
 
-					if (separacao[1].contains(texto)) {
+					if (separacao[1].toUpperCase().contains(texto.toUpperCase())) {
 						registrosEncontrados.add(reserva);
 					}
 				}
