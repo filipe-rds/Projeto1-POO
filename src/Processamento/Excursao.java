@@ -24,7 +24,7 @@ public class Excursao {
 		if (codigo > 0) {
 			this.codigo = codigo;
 		} else {
-			
+
 			codigoInvalido = true;
 		}
 
@@ -56,21 +56,18 @@ public class Excursao {
 			throw new Exception("O número máximo de reservas deve ser maior que zero");
 		}
 		listaReserva = new ArrayList<>();
-		
-		
+
 	}
-	
-	
 
 	public Excursao(int codigo) {
 		this.codigo = codigo;
 		listaReserva = new ArrayList<>();
 	}
-	
+
 	public Excursao() {
-        // Construtor vazio
-    }
-	
+		// Construtor vazio
+	}
+
 	// Getters and Setters
 	public int getCodigo() {
 		return codigo;
@@ -111,7 +108,7 @@ public class Excursao {
 
 		if (listaReserva.size() < maxReservas) {
 			for (int i = 0; i < listaReserva.size(); i++) {
-				//String temp = listaReserva.get(i);
+				// String temp = listaReserva.get(i);
 				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
 				if (separacao[1].equals(nome)) {
 					throw new Exception("Nome já está cadastrado");
@@ -246,88 +243,80 @@ public class Excursao {
 			throw new Exception("Não há registros de reserva na excursão");
 		}
 	}
-	 // Método para salvar os detalhes da excursão em um arquivo de texto
-	  public void salvar()throws Exception {
-	        String nomeArquivo = codigo + ".txt";
 
-	        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/entra/" + nomeArquivo))) {
-	            // Escreve o preço na primeira linha
-	            writer.write(String.valueOf(preco));
-	            writer.newLine();
+	// Método para salvar os detalhes da excursão em um arquivo de texto
+	public void salvar() throws Exception {
+		String nomeArquivo = codigo + ".txt";
 
-	            // Escreve o máximo de reservas na segunda linha
-	            writer.write(String.valueOf(maxReservas));
-	            writer.newLine();
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/Registro/" + nomeArquivo))) {
+			// Escreve o preço na primeira linha
+			writer.write(String.valueOf(preco));
+			writer.newLine();
 
-	            // Escreve as reservas no formato CPF/Nome em linhas subsequentes
-	            for (String reserva : listaReserva) {
-	                writer.write(reserva);
-	                writer.newLine();
-	            }
+			// Escreve o máximo de reservas na segunda linha
+			writer.write(String.valueOf(maxReservas));
+			writer.newLine();
 
-	            
-	        } catch (IOException e) {
-	        	throw new Exception("Erro ao tentar salvar");
-	        }
-	    }
-	  
-	  public void ler() {
-	        String nomeArquivo = codigo + ".txt";
+			// Escreve as reservas no formato CPF/Nome em linhas subsequentes
+			for (String reserva : listaReserva) {
+				writer.write(reserva);
+				writer.newLine();
+			}
 
-	        try (BufferedReader reader = new BufferedReader(new FileReader("src/entra/" + nomeArquivo))) {
-	            // Lê o preço da primeira linha
-	            double preco = Double.parseDouble(reader.readLine());
-
-	            // Lê o máximo de reservas da segunda linha
-	            int maxReservas = Integer.parseInt(reader.readLine());
-
-	            // Lê as reservas do restante do arquivo
-	            ArrayList<String> reservas = new ArrayList<>();
-	            String linha;
-	            while ((linha = reader.readLine()) != null) {
-	                reservas.add(linha);
-	            }
-
-	            // Atualiza os dados da instância com os dados lidos
-	            this.preco = preco;
-	            this.maxReservas = maxReservas;
-	            this.listaReserva = reservas;
-	        } catch (IOException e) {
-	            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
-	        }
-	    }
-	  
-	  
-	  public void exist() throws Exception {
-			
-			File arquivo = new File("src/entra/" + codigo + ".txt");
-	        if (arquivo.exists()) {
-	            throw new Exception("Já existe uma excursão com o código " + codigo);
-	        };
-	        
+		} catch (IOException e) {
+			throw new Exception("Erro ao tentar salvar");
 		}
-	  
-	  
-	  public void notExist() throws Exception {
-			
-			File arquivo = new File("src/entra/" + codigo + ".txt");
-	        if (!arquivo.exists()) {
-	            throw new Exception("Não existe uma excursão com o codigo " + codigo);
-	        };
-	        
+	}
+
+	public void ler() {
+		String nomeArquivo = codigo + ".txt";
+
+		try (BufferedReader reader = new BufferedReader(new FileReader("src/Registro/" + nomeArquivo))) {
+			// Lê o preço da primeira linha
+			double preco = Double.parseDouble(reader.readLine());
+
+			// Lê o máximo de reservas da segunda linha
+			int maxReservas = Integer.parseInt(reader.readLine());
+
+			// Lê as reservas do restante do arquivo
+			ArrayList<String> reservas = new ArrayList<>();
+			String linha;
+			while ((linha = reader.readLine()) != null) {
+				reservas.add(linha);
+			}
+
+			// Atualiza os dados da instância com os dados lidos
+			this.preco = preco;
+			this.maxReservas = maxReservas;
+			this.listaReserva = reservas;
+		} catch (IOException e) {
+			System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+		}
+	}
+
+	public void existe() throws Exception {
+
+		File arquivo = new File("src/Registro/" + codigo + ".txt");
+		if (arquivo.exists()) {
+			throw new Exception("Já existe uma excursão com o código " + codigo);
 		}
 
+	}
 
+	public void naoExiste() throws Exception {
+
+		File arquivo = new File("src/Registro/" + codigo + ".txt");
+		if (!arquivo.exists()) {
+			throw new Exception("Não existe uma excursão com o codigo " + codigo);
+		}
+
+	}
 
 	public double calcularValorTotal() {
 		double valorTotal = this.preco * listaReserva.size();
 		// System.out.println(valorTotal);
 		return valorTotal;
 	}
-	
-	
-	
-	
 
 	@Override
 	public String toString() {
