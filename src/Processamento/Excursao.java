@@ -107,10 +107,15 @@ public class Excursao {
 		// Verificar se existe um nome igual na lista
 
 		if (listaReserva.size() < maxReservas) {
+			
+			if (cpf.length() != 11) {
+				throw new Exception("O CPF deve conter 11 dígitos");
+			}
+			
 			for (int i = 0; i < listaReserva.size(); i++) {
 				// String temp = listaReserva.get(i);
 				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
-				if (separacao[1].equals(nome)) {
+				if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
 					throw new Exception("Nome já está cadastrado");
 				}
 			}
@@ -121,7 +126,14 @@ public class Excursao {
 	}
 
 	public void cancelarReserva(String cpf, String nome) throws Exception {
+		
 		if (!listaReserva.isEmpty()) {
+			
+
+			if (cpf.length() != 11) {
+				throw new Exception("O CPF deve conter 11 dígitos");
+			}
+			
 			boolean cancelamentoValido = false;
 			boolean cpfValido = false;
 			boolean nomeValido = false;
@@ -129,13 +141,13 @@ public class Excursao {
 			for (int i = 0; i < listaReserva.size(); i++) {
 				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
-				if (separacao[0].equals(cpf) && separacao[1].equals(nome)) {
+				if (separacao[0].equals(cpf) && separacao[1].toUpperCase().equals(nome.toUpperCase())) {
 					listaReserva.remove(i);
 					cancelamentoValido = true;
 					break;
 				} else if (separacao[0].equals(cpf)) {
 					cpfValido = true;
-				} else if (separacao[1].equals(nome)) {
+				} else if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
 					nomeValido = true;
 				}
 			}
@@ -156,9 +168,18 @@ public class Excursao {
 	}
 
 	public void cancelarReserva(String cpf) throws Exception {
+		
+		
+		
 		if (!listaReserva.isEmpty()) {
+		
+			if (cpf.length() != 11) {
+				throw new Exception("O CPF deve conter 11 dígitos");
+			}
+			
 			boolean cancelamentoValido = false;
-
+			
+			
 			for (int i = listaReserva.size() - 1; i >= 0; i--) {
 				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
@@ -178,7 +199,16 @@ public class Excursao {
 	}
 
 	public ArrayList<String> listarReservasPorCpf(String digitos) throws Exception {
+		
+			
+		
+		
+		
 		if (!listaReserva.isEmpty()) {
+			
+			
+			
+			
 			if (digitos == "") {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
@@ -189,18 +219,16 @@ public class Excursao {
 
 			} else {
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
-				boolean cpfEncontrado = false;
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
 					String[] separacao = reserva.split("/");
-					cpfEncontrado = separacao[0].contains(digitos);
 
-					if (cpfEncontrado) {
+					if (separacao[0].contains(digitos)) {
 						registrosEncontrados.add(reserva);
 					}
 				}
-				if (!cpfEncontrado) {
+				if (registrosEncontrados.isEmpty()) {
 					throw new Exception("A sequência de dígitos não foi encontrada na lista de reservas");
 				}
 				return registrosEncontrados;
@@ -222,18 +250,17 @@ public class Excursao {
 				return registroTotal;
 			} else {
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
-				boolean nomeEncontrado = false;
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
 					String[] separacao = reserva.split("/");
-					nomeEncontrado = separacao[1].contains(texto);
-					if (nomeEncontrado) {
+
+					if (separacao[1].toUpperCase().contains(texto.toUpperCase())) {
 						registrosEncontrados.add(reserva);
 					}
 				}
 
-				if (!nomeEncontrado) {
+				if (registrosEncontrados.isEmpty()) {
 					throw new Exception("A sequência de caracteres não foi encontrada na lista de reservas");
 				}
 				return registrosEncontrados;
@@ -258,8 +285,12 @@ public class Excursao {
 			writer.newLine();
 
 			// Escreve as reservas no formato CPF/Nome em linhas subsequentes
+			
 			for (String reserva : listaReserva) {
+				
+				   
 				writer.write(reserva);
+				
 				writer.newLine();
 			}
 
@@ -282,10 +313,14 @@ public class Excursao {
 			ArrayList<String> reservas = new ArrayList<>();
 			String linha;
 			while ((linha = reader.readLine()) != null) {
+				
+				
 				reservas.add(linha);
 			}
 
 			// Atualiza os dados da instância com os dados lidos
+			
+			
 			this.preco = preco;
 			this.maxReservas = maxReservas;
 			this.listaReserva = reservas;
@@ -314,7 +349,6 @@ public class Excursao {
 
 	public double calcularValorTotal() {
 		double valorTotal = this.preco * listaReserva.size();
-		// System.out.println(valorTotal);
 		return valorTotal;
 	}
 

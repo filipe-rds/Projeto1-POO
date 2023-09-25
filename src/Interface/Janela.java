@@ -29,10 +29,10 @@ public class Janela {
 	private JButton button_7;
 	private JLabel label;
 	private JLabel label_1;
+	private JTextArea textArea;
 
 	private Excursao excursao;
-	boolean estaExcursao = false;
-	private JTextArea textArea;
+	private boolean excursaoSelecionada = false;
 
 	/**
 	 * Launch the application.
@@ -78,6 +78,8 @@ public class Janela {
 		frame.setBounds(100, 100, 879, 508);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 
 		button = new JButton("Criar excursão");
 		button.setFont(new Font("Arial", Font.BOLD, 12));
@@ -114,22 +116,21 @@ public class Janela {
 
 					max = Integer.parseInt(maxStr);
 
-					Excursao teste1 = new Excursao(codigo, preco, max);
-
-					teste1.existe();
-
-					excursao = teste1;
+					Excursao temp = new Excursao(codigo, preco, max);
+					excursao = temp;
+					excursao.existe();
 					excursao.salvar();
+
 					JOptionPane.showMessageDialog(frame, "Sua excursão foi criada com sucesso.");
 					String codstr = String.valueOf(codigo);
 					label_1.setText(codstr);
-					estaExcursao = true;
+					excursaoSelecionada = true;
 
-				} catch (NumberFormatException ex) {
+				} catch (NumberFormatException a) {
 					JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.");
 
-				} catch (Exception g) {
-					JOptionPane.showMessageDialog(frame, "Erro: " + g.getMessage());
+				} catch (Exception b) {
+					JOptionPane.showMessageDialog(frame, "Erro: " + b.getMessage());
 				}
 			}
 		});
@@ -144,7 +145,9 @@ public class Janela {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int codigo;
+				ArrayList<String> lista = new ArrayList<>();
 				textArea.setText("");
+
 				try {
 
 					String codigoStr = JOptionPane.showInputDialog(frame, "Digite o código para recuperar");
@@ -154,23 +157,27 @@ public class Janela {
 
 					codigo = Integer.parseInt(codigoStr);
 
-					Excursao teste2 = new Excursao(codigo);
-
-					teste2.naoExiste();
-					teste2.ler();
-
-					excursao = teste2;
+					Excursao temp = new Excursao(codigo);
+					excursao = temp;
+					excursao.naoExiste();
+					excursao.ler();
 
 					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
 
 					String codstr = String.valueOf(codigo);
 					label_1.setText(codstr);
-					estaExcursao = true;
+					excursaoSelecionada = true;
 
-				} catch (NumberFormatException exx) {
+					lista = excursao.listarReservasPorNome("");
+					for (String str : lista) {
+						textArea.append(str + "\n");
+					}
+					textArea.setVisible(true);
+
+				} catch (NumberFormatException a) {
 					JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.");
-				} catch (Exception gg) {
-					JOptionPane.showMessageDialog(frame, gg.getMessage());
+				} catch (Exception b) {
+					JOptionPane.showMessageDialog(frame, b.getMessage());
 				}
 			}
 		}
@@ -189,7 +196,7 @@ public class Janela {
 				String nome = "";
 				textArea.setText("");
 
-				if (estaExcursao) {
+				if (excursaoSelecionada) {
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -198,7 +205,7 @@ public class Janela {
 						try {
 							cpf = input.replaceAll("[^0-9]", "");
 
-						} catch (Exception u) {
+						} catch (Exception a) {
 							return;
 						}
 						if (cpf.isEmpty()) {
@@ -206,12 +213,12 @@ public class Janela {
 
 						}
 
-					} catch (NumberFormatException exxx) {
+					} catch (NumberFormatException b) {
 						JOptionPane.showMessageDialog(frame, "Erro: Por favor, insira valores numéricos válidos");
 						return;
 
-					} catch (Exception p) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + p.getMessage());
+					} catch (Exception c) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + c.getMessage());
 						return;
 					}
 
@@ -221,17 +228,16 @@ public class Janela {
 						if (nome == null) {
 							return;
 						}
-						if (!nome.matches("^[a-zA-Z\\s]+$") || nome.matches(".*\\s{2,}.*")) {
-							throw new Exception(
-									"O nome deve conter apenas letras e espaços e não pode ter espaços consecutivos.");
-
+						if (!nome.matches("^(?U)[\\p{L}\\s]+$") || nome.matches(".*\\s{2,}.*")) {
+							throw new Exception("O nome deve conter apenas letras,"
+									+ " espaços e não pode ter espaços consecutivos.");
 						}
 
 						excursao.criarReserva(cpf, nome);
 						excursao.salvar();
 
-					} catch (Exception x) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + x.getMessage());
+					} catch (Exception d) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + d.getMessage());
 						return;
 					}
 
@@ -253,7 +259,11 @@ public class Janela {
 				String cpf = "";
 				String nome = "";
 
-				if (estaExcursao) {
+				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -262,20 +272,21 @@ public class Janela {
 						try {
 							cpf = input.replaceAll("[^0-9]", "");
 
-						} catch (Exception u) {
+						} catch (Exception a) {
 							return;
 						}
+
 						if (cpf.isEmpty()) {
 							throw new Exception("O CPF deve conter pelo menos um número.");
 
 						}
 
-					} catch (NumberFormatException exxx) {
+					} catch (NumberFormatException b) {
 						JOptionPane.showMessageDialog(frame, "Erro: Por favor, insira valores numéricos válidos");
 						return;
 
-					} catch (Exception p) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + p.getMessage());
+					} catch (Exception c) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + c.getMessage());
 						return;
 					}
 
@@ -285,10 +296,9 @@ public class Janela {
 						if (nome == null) {
 							return;
 						}
-						if (!nome.matches("^[a-zA-Z\\s]+$") || nome.matches(".*\\s{2,}.*")) {
+						if (!nome.matches("^(?U)[\\p{L}\\s]+$") || nome.matches(".*\\s{2,}.*")) {
 							throw new Exception(
-									"O nome deve conter apenas letras e espaços e não pode ter espaços consecutivos.");
-
+									"O nome deve conter apenas letras, espaços e não pode ter espaços consecutivos.");
 						}
 
 						excursao.cancelarReserva(cpf, nome);
@@ -315,7 +325,12 @@ public class Janela {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = "";
 
-				if (estaExcursao) {
+				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
+
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -364,7 +379,12 @@ public class Janela {
 				ArrayList<String> listaCpf = new ArrayList<>();
 				textArea.setText("");
 
-				if (estaExcursao) {
+				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
+
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
@@ -385,8 +405,8 @@ public class Janela {
 
 						textArea.setVisible(true);
 
-					} catch (Exception a) {
-						JOptionPane.showMessageDialog(frame, "Erro: " + a.getMessage());
+					} catch (Exception b) {
+						JOptionPane.showMessageDialog(frame, "Erro: " + b.getMessage());
 						return;
 
 					}
@@ -408,7 +428,11 @@ public class Janela {
 				ArrayList<String> listaNome = new ArrayList<>();
 				textArea.setText("");
 
-				if (estaExcursao) {
+				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
 
 					try {
 						nome = JOptionPane.showInputDialog(frame, "Digite o nome");
@@ -453,9 +477,14 @@ public class Janela {
 		button_7 = new JButton("Calcular valor total");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (estaExcursao) {
+				if (excursaoSelecionada) {
+					if (excursao.getListaReserva().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Erro: Não há registros de reserva na excursão");
+						return;
+					}
+
 					double total = excursao.calcularValorTotal();
-					JOptionPane.showMessageDialog(frame, "O valor total da excursão é de R$" + total);
+					JOptionPane.showMessageDialog(frame, "O valor total da excursão: R$" + total);
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
@@ -463,11 +492,13 @@ public class Janela {
 			}
 		});
 		button_7.setHorizontalAlignment(SwingConstants.LEFT);
+		
 		button_7.setFont(new Font("Arial", Font.BOLD, 12));
 		button_7.setBounds(32, 361, 203, 38);
 		frame.getContentPane().add(button_7);
 
 		textArea = new JTextArea();
+		textArea.setFont(new Font("Arial", Font.BOLD, 14));
 		textArea.setEditable(false);
 		textArea.setVisible(false);
 		textArea.setBounds(515, 32, 286, 367);
