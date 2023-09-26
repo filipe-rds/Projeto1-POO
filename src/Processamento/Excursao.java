@@ -111,8 +111,8 @@ public class Excursao {
 			}
 
 			for (int i = 0; i < listaReserva.size(); i++) {
-				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
-				if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
+				if (separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					throw new Exception("Nome já está cadastrado");
 				}
 			}
@@ -133,15 +133,15 @@ public class Excursao {
 			boolean nomeValido = false;
 
 			for (int i = 0; i < listaReserva.size(); i++) {
-				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
-				if (separacao[0].equals(cpf) && separacao[1].toUpperCase().equals(nome.toUpperCase())) {
+				if (separador[0].equals(cpf) && separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					listaReserva.remove(i);
 					cancelamentoValido = true;
 					break;
-				} else if (separacao[0].equals(cpf)) {
+				} else if (separador[0].equals(cpf)) {
 					cpfValido = true;
-				} else if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
+				} else if (separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					nomeValido = true;
 				}
 			}
@@ -169,9 +169,9 @@ public class Excursao {
 			boolean cancelamentoValido = false;
 
 			for (int i = listaReserva.size() - 1; i >= 0; i--) {
-				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
-				if (separacao[0].equals(cpf)) {
+				if (separador[0].equals(cpf)) {
 					listaReserva.remove(i);
 					cancelamentoValido = true;
 				}
@@ -203,9 +203,9 @@ public class Excursao {
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
-					String[] separacao = reserva.split("/");
+					String[] separador = reserva.split("/");
 
-					if (separacao[0].contains(cpf)) {
+					if (separador[0].contains(cpf)) {
 						registrosEncontrados.add(reserva);
 					}
 				}
@@ -234,9 +234,9 @@ public class Excursao {
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
-					String[] separacao = reserva.split("/"); // ["cpf","nome"]
+					String[] separador = reserva.split("/"); // ["cpf","nome"]
 
-					if (separacao[1].toUpperCase().contains(nome.toUpperCase())) {
+					if (separador[1].toUpperCase().contains(nome.toUpperCase())) {
 						registrosEncontrados.add(reserva);
 					}
 				}
