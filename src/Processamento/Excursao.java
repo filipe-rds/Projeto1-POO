@@ -107,7 +107,7 @@ public class Excursao {
 
 		if (listaReserva.size() < maxReservas) {
 			if(cpf.length()!=11) {
-				throw new Exception("CPF inválido");
+				throw new Exception("CPF deve conter 11 dígitos");
 			}
 
 			for (int i = 0; i < listaReserva.size(); i++) {
@@ -125,7 +125,7 @@ public class Excursao {
 	public void cancelarReserva(String cpf, String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
 			if(cpf.length()!=11) {
-				throw new Exception("CPF inválido");
+				throw new Exception("CPF deve conter 11 dígitos");
 			}
 			
 			boolean cancelamentoValido = false;
@@ -164,7 +164,7 @@ public class Excursao {
 	public void cancelarReserva(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
 			if(cpf.length()!=11) {
-				throw new Exception("CPF inválido");
+				throw new Exception("CPF deve conter 11 dígitos");
 			}
 			boolean cancelamentoValido = false;
 
@@ -198,7 +198,7 @@ public class Excursao {
 
 			} else {
 				if(cpf.length()!=11) {
-					throw new Exception("CPF inválido");
+					throw new Exception("CPF deve conter 11 dígitos");
 				}
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
