@@ -106,9 +106,9 @@ public class Excursao {
 		// Verificar se existe um nome igual na lista
 
 		if (listaReserva.size() < maxReservas) {
-			if(cpf.length()!=11) {
-				throw new Exception("CPF deve conter 11 dígitos");
-			}
+			// if(cpf.length()!=11) {
+			// 	throw new Exception("CPF deve conter 11 dígitos");
+			// }
 
 			for (int i = 0; i < listaReserva.size(); i++) {
 				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
@@ -124,9 +124,9 @@ public class Excursao {
 
 	public void cancelarReserva(String cpf, String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if(cpf.length()!=11) {
-				throw new Exception("CPF deve conter 11 dígitos");
-			}
+			// if(cpf.length()!=11) {
+			// 	throw new Exception("CPF deve conter 11 dígitos");
+			// }
 			
 			boolean cancelamentoValido = false;
 			boolean cpfValido = false;
@@ -148,11 +148,11 @@ public class Excursao {
 
 			if (!cancelamentoValido) {
 				if (!cpfValido && !nomeValido) {
-					throw new Exception("Não existe reserva com esse CPF e nome.");
+					throw new Exception("Não existe reserva com este CPF e nome.");
 				} else if (!cpfValido) {
-					throw new Exception("Não existe esse CPF");
+					throw new Exception("Não existe reserva com este CPF");
 				} else if (!nomeValido) {
-					throw new Exception("Não existe esse nome");
+					throw new Exception("Não existe reserva com este nome");
 				}
 			}
 		} else {
@@ -163,9 +163,9 @@ public class Excursao {
 
 	public void cancelarReserva(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if(cpf.length()!=11) {
-				throw new Exception("CPF deve conter 11 dígitos");
-			}
+			// if(cpf.length()!=11) {
+			// 	throw new Exception("CPF deve conter 11 dígitos");
+			// }
 			boolean cancelamentoValido = false;
 
 			for (int i = listaReserva.size() - 1; i >= 0; i--) {
@@ -177,7 +177,7 @@ public class Excursao {
 				}
 			}
 			if (!cancelamentoValido) {
-				throw new Exception("Não existe esse cpf");
+				throw new Exception("Não existe reserva com este cpf");
 			}
 
 		} else {
@@ -197,9 +197,9 @@ public class Excursao {
 				return registroTotal;
 
 			} else {
-				if(cpf.length()!=11) {
-					throw new Exception("CPF deve conter 11 dígitos");
-				}
+				// if(cpf.length()!=11) {
+				// 	throw new Exception("CPF deve conter 11 dígitos");
+				// }
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
