@@ -19,17 +19,17 @@ import javax.swing.JTextArea;
 public class Janela {
 
 	private JFrame frame;
-	private JButton button;
-	private JButton button_1;
-	private JButton button_2;
-	private JButton button_3;
-	private JButton button_4;
-	private JButton button_5;
-	private JButton button_6;
-	private JButton button_7;
-	private JLabel label;
-	private JLabel label_1;
-	private JTextArea textArea;
+	private JButton btnCriarExcursao;
+	private JButton btnRecuperarExcursao;
+	private JButton btnCriarReserva;
+	private JButton btnCancelarReservaIndividual;
+	private JButton btnCancelarReservaGrupo;
+	private JButton btnListarReservaPorCPF;
+	private JButton btnListarReservaPorNome;
+	private JButton btnCalcularValorTotal;
+	private JLabel labelCodigoDaExcursaoAtual;
+	private JLabel labelNenhumaExcursaoSelecionada;
+	private JTextArea textAreaPainel;
 
 	private Excursao excursao;
 	private boolean excursaoSelecionada = false;
@@ -81,13 +81,14 @@ public class Janela {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
-		button = new JButton("Criar excursão");
-		button.setFont(new Font("Arial", Font.BOLD, 12));
-		button.setHorizontalAlignment(SwingConstants.LEFT);
-		button.setForeground(UIManager.getColor("Button.foreground"));
-		button.setBackground(UIManager.getColor("Button.background"));
+		btnCriarExcursao = new JButton("Criar excursão");
+		
+		btnCriarExcursao.setFont(new Font("Arial", Font.BOLD, 12));
+		btnCriarExcursao.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCriarExcursao.setForeground(UIManager.getColor("Button.foreground"));
+		btnCriarExcursao.setBackground(UIManager.getColor("Button.background"));
 	
-		button.addActionListener(new ActionListener() {
+		btnCriarExcursao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int codigo;
 				double preco;
@@ -121,10 +122,12 @@ public class Janela {
 					excursao = temp;
 					excursao.existe();
 					excursao.salvar();
+					textAreaPainel.setVisible(false);
+					textAreaPainel.setText("");
 
 					JOptionPane.showMessageDialog(frame, "Sua excursão foi criada com sucesso.");
 					String codstr = String.valueOf(codigo);
-					label_1.setText(codstr);
+					labelNenhumaExcursaoSelecionada.setText(codstr);
 					excursaoSelecionada = true;
 
 				} catch (NumberFormatException a) {
@@ -136,18 +139,17 @@ public class Janela {
 			}
 		});
 
-		button.setBounds(32, 25, 203, 38);
-		frame.getContentPane().add(button);
+		btnCriarExcursao.setBounds(32, 25, 203, 38);
+		frame.getContentPane().add(btnCriarExcursao);
 
-		button_1 = new JButton("Recuperar excursão");
-		button_1.setBackground(Color.WHITE);
-		button_1.setFont(new Font("Arial", Font.BOLD, 12));
-		button_1.setHorizontalAlignment(SwingConstants.LEFT);
-		button_1.addActionListener(new ActionListener() {
+		btnRecuperarExcursao = new JButton("Recuperar excursão");
+		btnRecuperarExcursao.setBackground(Color.WHITE);
+		btnRecuperarExcursao.setFont(new Font("Arial", Font.BOLD, 12));
+		btnRecuperarExcursao.setHorizontalAlignment(SwingConstants.LEFT);
+		btnRecuperarExcursao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int codigo;
 				ArrayList<String> lista = new ArrayList<>();
-				textArea.setText("");
 
 				try {
 
@@ -162,18 +164,22 @@ public class Janela {
 					excursao = temp;
 					excursao.naoExiste();
 					excursao.ler();
+					textAreaPainel.setText("");
+					
 
-					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
+					
 
 					String codstr = String.valueOf(codigo);
-					label_1.setText(codstr);
+					labelNenhumaExcursaoSelecionada.setText(codstr);
 					excursaoSelecionada = true;
 
 					lista = excursao.listarReservasPorNome("");
 					for (String str : lista) {
-						textArea.append(str + "\n");
+						textAreaPainel.append(str + "\n");
 					}
-					textArea.setVisible(true);
+					textAreaPainel.setVisible(true);
+					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
+
 
 				} catch (NumberFormatException a) {
 					JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.");
@@ -184,18 +190,18 @@ public class Janela {
 		}
 
 		);
-		button_1.setBounds(32, 73, 203, 38);
-		frame.getContentPane().add(button_1);
+		btnRecuperarExcursao.setBounds(32, 73, 203, 38);
+		frame.getContentPane().add(btnRecuperarExcursao);
 
-		button_2 = new JButton("Criar reserva");
-		button_2.setFont(new Font("Arial", Font.BOLD, 12));
-		button_2.setHorizontalAlignment(SwingConstants.LEFT);
-		button_2.addActionListener(new ActionListener() {
+		btnCriarReserva = new JButton("Criar reserva");
+		btnCriarReserva.setFont(new Font("Arial", Font.BOLD, 12));
+		btnCriarReserva.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCriarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				String cpf = "";
 				String nome = "";
-				textArea.setText("");
+				
 
 				if (excursaoSelecionada) {
 					try {
@@ -236,26 +242,31 @@ public class Janela {
 
 						excursao.criarReserva(cpf, nome);
 						excursao.salvar();
+						textAreaPainel.setVisible(false);
+						textAreaPainel.setText("");
+						
 
 					} catch (Exception d) {
 						JOptionPane.showMessageDialog(frame, "Erro: " + d.getMessage());
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame, excursao);
+					JOptionPane.showMessageDialog(frame,"Reserva realizada com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
+				
 			}
+			
 		});
-		button_2.setBounds(32, 121, 203, 38);
-		frame.getContentPane().add(button_2);
+		btnCriarReserva.setBounds(32, 121, 203, 38);
+		frame.getContentPane().add(btnCriarReserva);
 
-		button_3 = new JButton("Cancelar reserva individual");
-		button_3.setFont(new Font("Arial", Font.BOLD, 12));
-		button_3.setHorizontalAlignment(SwingConstants.LEFT);
-		button_3.addActionListener(new ActionListener() {
+		btnCancelarReservaIndividual = new JButton("Cancelar reserva individual");
+		btnCancelarReservaIndividual.setFont(new Font("Arial", Font.BOLD, 12));
+		btnCancelarReservaIndividual.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCancelarReservaIndividual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = "";
 				String nome = "";
@@ -304,25 +315,28 @@ public class Janela {
 
 						excursao.cancelarReserva(cpf, nome);
 						excursao.salvar();
+						textAreaPainel.setText("");
+						textAreaPainel.setVisible(false);
 
 					} catch (Exception x) {
 						JOptionPane.showMessageDialog(frame, "Erro: " + x.getMessage());
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame, excursao);
+					JOptionPane.showMessageDialog(frame,"Cancelamento feito com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
 
 			}
-		});
-		button_3.setBounds(32, 169, 203, 38);
-		frame.getContentPane().add(button_3);
+		}
+		);
+		btnCancelarReservaIndividual.setBounds(32, 169, 203, 38);
+		frame.getContentPane().add(btnCancelarReservaIndividual);
 
-		button_4 = new JButton("Cancelar reserva grupo");
-		button_4.addActionListener(new ActionListener() {
+		btnCancelarReservaGrupo = new JButton("Cancelar reserva grupo");
+		btnCancelarReservaGrupo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = "";
 
@@ -350,6 +364,8 @@ public class Janela {
 
 						excursao.cancelarReserva(cpf);
 						excursao.salvar();
+						textAreaPainel.setVisible(false);
+						textAreaPainel.setText("");
 
 					} catch (NumberFormatException b) {
 						JOptionPane.showMessageDialog(frame, "Erro: Por favor, insira valores numéricos válidos");
@@ -360,7 +376,7 @@ public class Janela {
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame, excursao);
+					JOptionPane.showMessageDialog(frame, "Cancelamento feito com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
@@ -368,17 +384,17 @@ public class Janela {
 
 			}
 		});
-		button_4.setFont(new Font("Arial", Font.BOLD, 12));
-		button_4.setHorizontalAlignment(SwingConstants.LEFT);
-		button_4.setBounds(32, 217, 203, 38);
-		frame.getContentPane().add(button_4);
+		btnCancelarReservaGrupo.setFont(new Font("Arial", Font.BOLD, 12));
+		btnCancelarReservaGrupo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCancelarReservaGrupo.setBounds(32, 217, 203, 38);
+		frame.getContentPane().add(btnCancelarReservaGrupo);
 
-		button_5 = new JButton("Listar reserva por CPF");
-		button_5.addActionListener(new ActionListener() {
+		btnListarReservaPorCPF = new JButton("Listar reserva por CPF");
+		btnListarReservaPorCPF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = "";
 				ArrayList<String> listaCpf = new ArrayList<>();
-				textArea.setText("");
+				
 
 				if (excursaoSelecionada) {
 					if (excursao.getListaReserva().isEmpty()) {
@@ -389,22 +405,27 @@ public class Janela {
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
+						
+						
+						
 
 						// Remove espaços em branco e caracteres não numéricos da entrada
 						try {
 							cpf = input.replaceAll("[^0-9]", "");
+							
 
 						} catch (Exception a) {
 							return;
 						}
-
+						
+						textAreaPainel.setText("");
 						listaCpf = excursao.listarReservasPorCpf(cpf);
 
 						for (String str : listaCpf) {
-							textArea.append(str + "\n"); // Adicione a string e uma quebra de linha
+							textAreaPainel.append(str + "\n"); // Adicione a string e uma quebra de linha
 						}
 
-						textArea.setVisible(true);
+						textAreaPainel.setVisible(true);
 
 					} catch (Exception b) {
 						JOptionPane.showMessageDialog(frame, "Erro: " + b.getMessage());
@@ -417,17 +438,16 @@ public class Janela {
 
 			}
 		});
-		button_5.setFont(new Font("Arial", Font.BOLD, 12));
-		button_5.setHorizontalAlignment(SwingConstants.LEFT);
-		button_5.setBounds(32, 265, 203, 38);
-		frame.getContentPane().add(button_5);
+		btnListarReservaPorCPF.setFont(new Font("Arial", Font.BOLD, 12));
+		btnListarReservaPorCPF.setHorizontalAlignment(SwingConstants.LEFT);
+		btnListarReservaPorCPF.setBounds(32, 265, 203, 38);
+		frame.getContentPane().add(btnListarReservaPorCPF);
 
-		button_6 = new JButton("Listar reserva por nome");
-		button_6.addActionListener(new ActionListener() {
+		btnListarReservaPorNome = new JButton("Listar reserva por nome");
+		btnListarReservaPorNome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = "";
 				ArrayList<String> listaNome = new ArrayList<>();
-				textArea.setText("");
 
 				if (excursaoSelecionada) {
 					if (excursao.getListaReserva().isEmpty()) {
@@ -437,13 +457,19 @@ public class Janela {
 
 					try {
 						nome = JOptionPane.showInputDialog(frame, "Digite o nome");
+						
+						
+						if (nome==null) {
+							return;
+						}
+						textAreaPainel.setText("");
 						listaNome = excursao.listarReservasPorNome(nome);
 
 						for (String str : listaNome) {
-							textArea.append(str + "\n"); // Adicione a string e uma quebra de linha
+							textAreaPainel.append(str + "\n"); // Adicione a string e uma quebra de linha
 						}
 
-						textArea.setVisible(true);
+						textAreaPainel.setVisible(true);
 
 					} catch (Exception a) {
 						JOptionPane.showMessageDialog(frame, "Erro: " + a.getMessage());
@@ -455,28 +481,29 @@ public class Janela {
 				}
 			}
 		});
-		button_6.setFont(new Font("Arial", Font.BOLD, 12));
-		button_6.setHorizontalAlignment(SwingConstants.LEFT);
-		button_6.setBounds(32, 313, 203, 38);
+		btnListarReservaPorNome.setFont(new Font("Arial", Font.BOLD, 12));
+		btnListarReservaPorNome.setHorizontalAlignment(SwingConstants.LEFT);
+		btnListarReservaPorNome.setBounds(32, 313, 203, 38);
 
-		frame.getContentPane().add(button_6);
+		frame.getContentPane().add(btnListarReservaPorNome);
 
-		label = new JLabel("Código da excursão atual:");
-		label.setHorizontalAlignment(SwingConstants.LEFT);
-		label.setForeground(new Color(255, 0, 0));
-		label.setFont(new Font("Constantia", Font.BOLD, 17));
-		label.setBounds(21, 420, 247, 38);
-		frame.getContentPane().add(label);
+		
+		labelCodigoDaExcursaoAtual = new JLabel("Código da excursão atual:");
+		labelCodigoDaExcursaoAtual.setHorizontalAlignment(SwingConstants.LEFT);
+		labelCodigoDaExcursaoAtual.setForeground(new Color(255, 0, 0));
+		labelCodigoDaExcursaoAtual.setFont(new Font("Constantia", Font.BOLD, 17));
+		labelCodigoDaExcursaoAtual.setBounds(21, 420, 247, 38);
+		frame.getContentPane().add(labelCodigoDaExcursaoAtual);
 
-		label_1 = new JLabel("Nenhuma excursão selecionada");
-		label_1.setForeground(Color.BLACK);
-		label_1.setBackground(Color.WHITE);
-		label_1.setFont(new Font("Monospaced", Font.BOLD, 18));
-		label_1.setBounds(267, 423, 335, 24);
-		frame.getContentPane().add(label_1);
+		labelNenhumaExcursaoSelecionada = new JLabel("Nenhuma excursão selecionada");
+		labelNenhumaExcursaoSelecionada.setForeground(Color.BLACK);
+		labelNenhumaExcursaoSelecionada.setBackground(Color.WHITE);
+		labelNenhumaExcursaoSelecionada.setFont(new Font("Monospaced", Font.BOLD, 18));
+		labelNenhumaExcursaoSelecionada.setBounds(267, 423, 335, 24);
+		frame.getContentPane().add(labelNenhumaExcursaoSelecionada);
 
-		button_7 = new JButton("Calcular valor total");
-		button_7.addActionListener(new ActionListener() {
+		btnCalcularValorTotal = new JButton("Calcular valor total");
+		btnCalcularValorTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (excursaoSelecionada) {
 					if (excursao.getListaReserva().isEmpty()) {
@@ -485,6 +512,8 @@ public class Janela {
 					}
 
 					double total = excursao.calcularValorTotal();
+					textAreaPainel.setText("");
+					textAreaPainel.setVisible(false);
 					JOptionPane.showMessageDialog(frame, "O valor total da excursão: R$" + total);
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
@@ -492,15 +521,16 @@ public class Janela {
 
 			}
 		});
-		button_7.setHorizontalAlignment(SwingConstants.LEFT);
-		button_7.setFont(new Font("Arial", Font.BOLD, 12));
-		button_7.setBounds(32, 361, 203, 38);
-		frame.getContentPane().add(button_7);
+		btnCalcularValorTotal.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCalcularValorTotal.setFont(new Font("Arial", Font.BOLD, 12));
+		btnCalcularValorTotal.setBounds(32, 361, 203, 38);
+		frame.getContentPane().add(btnCalcularValorTotal);
 
-		textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setVisible(false);
-		textArea.setBounds(515, 32, 286, 367);
-		frame.getContentPane().add(textArea);
+		textAreaPainel = new JTextArea();
+		textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
+		textAreaPainel.setEditable(false);
+		textAreaPainel.setVisible(false);
+		textAreaPainel.setBounds(515, 32, 286, 367);
+		frame.getContentPane().add(textAreaPainel);
 	}
 }
