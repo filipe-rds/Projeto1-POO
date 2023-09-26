@@ -93,6 +93,9 @@ public class Janela {
 				int codigo;
 				double preco;
 				int max;
+				textAreaPainel.setVisible(false);
+				textAreaPainel.setText("");
+				
 				try {
 
 					String codigoStr = JOptionPane.showInputDialog(frame, "Digite o código da sua excursão");
@@ -122,8 +125,7 @@ public class Janela {
 					excursao = temp;
 					excursao.existe();
 					excursao.salvar();
-					textAreaPainel.setVisible(false);
-					textAreaPainel.setText("");
+					
 
 					JOptionPane.showMessageDialog(frame, "Sua excursão foi criada com sucesso.");
 					String codstr = String.valueOf(codigo);
@@ -148,6 +150,9 @@ public class Janela {
 		btnRecuperarExcursao.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRecuperarExcursao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				textAreaPainel.setVisible(false);
+				textAreaPainel.setText("");
 				int codigo;
 				ArrayList<String> lista = new ArrayList<>();
 
@@ -164,7 +169,7 @@ public class Janela {
 					excursao = temp;
 					excursao.naoExiste();
 					excursao.ler();
-					textAreaPainel.setText("");
+					
 					
 
 					
@@ -198,6 +203,8 @@ public class Janela {
 		btnCriarReserva.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCriarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textAreaPainel.setVisible(false);
+				textAreaPainel.setText("");
 
 				String cpf = "";
 				String nome = "";
@@ -391,6 +398,8 @@ public class Janela {
 		btnListarReservaPorCPF = new JButton("Listar reserva por CPF");
 		btnListarReservaPorCPF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textAreaPainel.setVisible(false);
+				textAreaPainel.setText("");
 				String cpf = "";
 				ArrayList<String> listaCpf = new ArrayList<>();
 				
@@ -455,6 +464,8 @@ public class Janela {
 		btnListarReservaPorNome = new JButton("Listar reserva por nome");
 		btnListarReservaPorNome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textAreaPainel.setVisible(false);
+				textAreaPainel.setText("");
 				String nome = "";
 				ArrayList<String> listaNome = new ArrayList<>();
 
