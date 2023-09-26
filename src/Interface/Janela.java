@@ -264,8 +264,13 @@ public class Janela {
 		frame.getContentPane().add(btnCriarReserva);
 
 		btnCancelarReservaIndividual = new JButton("Cancelar reserva individual");
+		btnCancelarReservaIndividual.setToolTipText("Cancele a reserva individualmente");
 		btnCancelarReservaIndividual.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCancelarReservaIndividual.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		
+		
+		
 		btnCancelarReservaIndividual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = "";
@@ -288,10 +293,7 @@ public class Janela {
 							return;
 						}
 
-						if (cpf.isEmpty()) {
-							throw new Exception("O CPF deve conter pelo menos um número.");
-
-						}
+						
 
 					} catch (NumberFormatException b) {
 						JOptionPane.showMessageDialog(frame, "Erro: Por favor, insira valores numéricos válidos");
@@ -323,7 +325,7 @@ public class Janela {
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame,"Cancelamento feito com sucesso");
+					JOptionPane.showMessageDialog(frame,"Cancelamento do CPF " + cpf + " e nome " + nome+ " feito com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
@@ -357,10 +359,7 @@ public class Janela {
 						} catch (Exception a) {
 							return;
 						}
-						if (cpf.isEmpty()) {
-							throw new Exception("O CPF deve conter pelo menos um número.");
-
-						}
+						
 
 						excursao.cancelarReserva(cpf);
 						excursao.salvar();
@@ -376,7 +375,7 @@ public class Janela {
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame, "Cancelamento feito com sucesso");
+					JOptionPane.showMessageDialog(frame,"Todas as reservas feitas no CPF " + cpf + " foram canceladas com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
@@ -426,12 +425,22 @@ public class Janela {
 						}
 
 						textAreaPainel.setVisible(true);
+						
+						
 
 					} catch (Exception b) {
 						JOptionPane.showMessageDialog(frame, "Erro: " + b.getMessage());
 						return;
 
 					}
+					
+					if ( cpf.isEmpty()){ 
+						JOptionPane.showMessageDialog(frame, "Todas as reservas feitas");
+					}else {
+						JOptionPane.showMessageDialog(frame, "Lista de reservas por CPF: " + cpf);
+					}
+					
+					
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
@@ -476,8 +485,13 @@ public class Janela {
 						return;
 
 					}
+					if (nome.isEmpty()){ 
+						JOptionPane.showMessageDialog(frame, "Todas as reservas feitas");}
+					else
+					JOptionPane.showMessageDialog(frame, "Lista de reservas pelo nome: "+ nome);
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
+					
 				}
 			}
 		});
