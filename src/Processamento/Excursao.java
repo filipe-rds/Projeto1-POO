@@ -188,7 +188,7 @@ public class Excursao {
 
 	public ArrayList<String> listarReservasPorCpf(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if (cpf == "") {
+			if (cpf.length()== 0) {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
@@ -222,7 +222,7 @@ public class Excursao {
 
 	public ArrayList<String> listarReservasPorNome(String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if (nome == "") {
+			if (nome.length()== 0) {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
