@@ -527,6 +527,7 @@ public class Janela {
 		frame.getContentPane().add(btnCalcularValorTotal);
 
 		textAreaPainel = new JTextArea();
+		textAreaPainel.setBackground(Color.LIGHT_GRAY);
 		textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
 		textAreaPainel.setEditable(false);
 		textAreaPainel.setVisible(false);
