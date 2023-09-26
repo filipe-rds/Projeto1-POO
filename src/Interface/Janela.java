@@ -170,17 +170,14 @@ public class Janela {
 					excursao.naoExiste();
 					excursao.ler();
 					
-					
-
-					
-
 					String codstr = String.valueOf(codigo);
 					labelNenhumaExcursaoSelecionada.setText(codstr);
 					excursaoSelecionada = true;
 
 					lista = excursao.listarReservasPorNome("");
 					for (String str : lista) {
-						textAreaPainel.append(str + "\n");
+						String[] separador = str.split("/");
+						textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
 					}
 					textAreaPainel.setVisible(true);
 					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
@@ -430,7 +427,8 @@ public class Janela {
 						listaCpf = excursao.listarReservasPorCpf(cpf);
 
 						for (String str : listaCpf) {
-							textAreaPainel.append(str + "\n"); // Adicione a string e uma quebra de linha
+							String[] separador = str.split("/");
+							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n"); 
 						}
 
 						textAreaPainel.setVisible(true);
@@ -486,7 +484,8 @@ public class Janela {
 						listaNome = excursao.listarReservasPorNome(nome);
 
 						for (String str : listaNome) {
-							textAreaPainel.append(str + "\n"); // Adicione a string e uma quebra de linha
+							String[] separador = str.split("/");
+							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
 						}
 
 						textAreaPainel.setVisible(true);

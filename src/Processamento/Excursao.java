@@ -315,7 +315,7 @@ public class Excursao {
 
 		File arquivo = new File("src/Registro/" + codigo + ".txt");
 		if (!arquivo.exists()) {
-			throw new Exception("Não existe uma excursão com o codigo " + codigo);
+			throw new Exception("Não existe uma excursão com o código " + codigo);
 		}
 
 	}
