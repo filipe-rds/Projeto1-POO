@@ -78,12 +78,15 @@ public class Janela {
 		frame.setBounds(100, 100, 879, 508);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 
 		button = new JButton("Criar excursão");
 		button.setFont(new Font("Arial", Font.BOLD, 12));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setForeground(UIManager.getColor("Button.foreground"));
 		button.setBackground(UIManager.getColor("Button.background"));
+	
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int codigo;

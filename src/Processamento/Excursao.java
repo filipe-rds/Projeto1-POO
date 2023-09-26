@@ -24,7 +24,6 @@ public class Excursao {
 		if (codigo > 0) {
 			this.codigo = codigo;
 		} else {
-
 			codigoInvalido = true;
 		}
 
@@ -107,8 +106,11 @@ public class Excursao {
 		// Verificar se existe um nome igual na lista
 
 		if (listaReserva.size() < maxReservas) {
+			if(cpf.length()!=11) {
+				throw new Exception("CPF inválido");
+			}
+
 			for (int i = 0; i < listaReserva.size(); i++) {
-				// String temp = listaReserva.get(i);
 				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
 				if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
 					throw new Exception("Nome já está cadastrado");
@@ -122,6 +124,10 @@ public class Excursao {
 
 	public void cancelarReserva(String cpf, String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
+			if(cpf.length()!=11) {
+				throw new Exception("CPF inválido");
+			}
+			
 			boolean cancelamentoValido = false;
 			boolean cpfValido = false;
 			boolean nomeValido = false;
@@ -157,6 +163,9 @@ public class Excursao {
 
 	public void cancelarReserva(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
+			if(cpf.length()!=11) {
+				throw new Exception("CPF inválido");
+			}
 			boolean cancelamentoValido = false;
 
 			for (int i = listaReserva.size() - 1; i >= 0; i--) {
@@ -177,9 +186,9 @@ public class Excursao {
 
 	}
 
-	public ArrayList<String> listarReservasPorCpf(String digitos) throws Exception {
+	public ArrayList<String> listarReservasPorCpf(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if (digitos == "") {
+			if (cpf == "") {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
@@ -188,13 +197,15 @@ public class Excursao {
 				return registroTotal;
 
 			} else {
+				if(cpf.length()!=11) {
+					throw new Exception("CPF inválido");
+				}
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
-
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
 					String[] separacao = reserva.split("/");
 
-					if (separacao[0].contains(digitos)) {
+					if (separacao[0].contains(cpf)) {
 						registrosEncontrados.add(reserva);
 					}
 				}
@@ -209,9 +220,9 @@ public class Excursao {
 		}
 	}
 
-	public ArrayList<String> listarReservasPorNome(String texto) throws Exception {
+	public ArrayList<String> listarReservasPorNome(String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if (texto == "") {
+			if (nome == "") {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
@@ -223,9 +234,9 @@ public class Excursao {
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
-					String[] separacao = reserva.split("/");
+					String[] separacao = reserva.split("/"); // ["cpf","nome"]
 
-					if (separacao[1].toUpperCase().contains(texto.toUpperCase())) {
+					if (separacao[1].toUpperCase().contains(nome.toUpperCase())) {
 						registrosEncontrados.add(reserva);
 					}
 				}
@@ -245,19 +256,19 @@ public class Excursao {
 	public void salvar() throws Exception {
 		String nomeArquivo = codigo + ".txt";
 
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/Registro/" + nomeArquivo))) {
+		try (BufferedWriter escritor = new BufferedWriter(new FileWriter("src/Registro/" + nomeArquivo))) {
 			// Escreve o preço na primeira linha
-			writer.write(String.valueOf(preco));
-			writer.newLine();
+			escritor.write(String.valueOf(preco));
+			escritor.newLine();
 
 			// Escreve o máximo de reservas na segunda linha
-			writer.write(String.valueOf(maxReservas));
-			writer.newLine();
+			escritor.write(String.valueOf(maxReservas));
+			escritor.newLine();
 
 			// Escreve as reservas no formato CPF/Nome em linhas subsequentes
 			for (String reserva : listaReserva) {
-				writer.write(reserva);
-				writer.newLine();
+				escritor.write(reserva);
+				escritor.newLine();
 			}
 
 		} catch (IOException e) {
@@ -268,17 +279,17 @@ public class Excursao {
 	public void ler() {
 		String nomeArquivo = codigo + ".txt";
 
-		try (BufferedReader reader = new BufferedReader(new FileReader("src/Registro/" + nomeArquivo))) {
+		try (BufferedReader leitor = new BufferedReader(new FileReader("src/Registro/" + nomeArquivo))) {
 			// Lê o preço da primeira linha
-			double preco = Double.parseDouble(reader.readLine());
+			double preco = Double.parseDouble(leitor.readLine());
 
 			// Lê o máximo de reservas da segunda linha
-			int maxReservas = Integer.parseInt(reader.readLine());
+			int maxReservas = Integer.parseInt(leitor.readLine());
 
 			// Lê as reservas do restante do arquivo
 			ArrayList<String> reservas = new ArrayList<>();
 			String linha;
-			while ((linha = reader.readLine()) != null) {
+			while ((linha = leitor.readLine()) != null) {
 				reservas.add(linha);
 			}
 
