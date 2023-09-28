@@ -1,7 +1,6 @@
 package Processamento;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,6 +14,7 @@ public class Excursao {
 	private int maxReservas;
 	private ArrayList<String> listaReserva = new ArrayList<>();
 
+	
 	// Constructors
 	public Excursao(int codigo, double preco, int maxReservas) throws Exception {
 		boolean codigoInvalido = false;
@@ -24,7 +24,6 @@ public class Excursao {
 		if (codigo > 0) {
 			this.codigo = codigo;
 		} else {
-
 			codigoInvalido = true;
 		}
 
@@ -107,15 +106,13 @@ public class Excursao {
 		// Verificar se existe um nome igual na lista
 
 		if (listaReserva.size() < maxReservas) {
-			
-			if (cpf.length() != 11) {
-				throw new Exception("O CPF deve conter 11 dígitos");
+			if(cpf.length()!=11) {
+				throw new Exception("CPF deve conter 11 dígitos");
 			}
-			
+
 			for (int i = 0; i < listaReserva.size(); i++) {
-				// String temp = listaReserva.get(i);
-				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
-				if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
+				if (separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					throw new Exception("Nome já está cadastrado");
 				}
 			}
@@ -126,12 +123,9 @@ public class Excursao {
 	}
 
 	public void cancelarReserva(String cpf, String nome) throws Exception {
-		
 		if (!listaReserva.isEmpty()) {
-			
-
-			if (cpf.length() != 11) {
-				throw new Exception("O CPF deve conter 11 dígitos");
+			if(cpf.length()!=11) {
+				throw new Exception("CPF deve conter 11 dígitos");
 			}
 			
 			boolean cancelamentoValido = false;
@@ -139,15 +133,15 @@ public class Excursao {
 			boolean nomeValido = false;
 
 			for (int i = 0; i < listaReserva.size(); i++) {
-				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
-				if (separacao[0].equals(cpf) && separacao[1].toUpperCase().equals(nome.toUpperCase())) {
+				if (separador[0].equals(cpf) && separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					listaReserva.remove(i);
 					cancelamentoValido = true;
 					break;
-				} else if (separacao[0].equals(cpf)) {
+				} else if (separador[0].equals(cpf)) {
 					cpfValido = true;
-				} else if (separacao[1].toUpperCase().equals(nome.toUpperCase())) {
+				} else if (separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					nomeValido = true;
 				}
 			}
@@ -168,22 +162,16 @@ public class Excursao {
 	}
 
 	public void cancelarReserva(String cpf) throws Exception {
-		
-		
-		
 		if (!listaReserva.isEmpty()) {
-		
-			if (cpf.length() != 11) {
-				throw new Exception("O CPF deve conter 11 dígitos");
+			if(cpf.length()!=11) {
+				throw new Exception("CPF deve conter 11 dígitos");
 			}
-			
 			boolean cancelamentoValido = false;
-			
-			
-			for (int i = listaReserva.size() - 1; i >= 0; i--) {
-				String[] separacao = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
-				if (separacao[0].equals(cpf)) {
+			for (int i = listaReserva.size() - 1; i >= 0; i--) {
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
+
+				if (separador[0].equals(cpf)) {
 					listaReserva.remove(i);
 					cancelamentoValido = true;
 				}
@@ -198,18 +186,9 @@ public class Excursao {
 
 	}
 
-	public ArrayList<String> listarReservasPorCpf(String digitos) throws Exception {
-		
-			
-		
-		
-		
+	public ArrayList<String> listarReservasPorCpf(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			
-			
-			
-			
-			if (digitos == "") {
+			if (cpf.length()== 0) {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
@@ -218,13 +197,15 @@ public class Excursao {
 				return registroTotal;
 
 			} else {
+				if(cpf.length()!=11) {
+					throw new Exception("CPF deve conter 11 dígitos");
+				}
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
-
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
-					String[] separacao = reserva.split("/");
+					String[] separador = reserva.split("/");
 
-					if (separacao[0].contains(digitos)) {
+					if (separador[0].contains(cpf)) {
 						registrosEncontrados.add(reserva);
 					}
 				}
@@ -239,9 +220,9 @@ public class Excursao {
 		}
 	}
 
-	public ArrayList<String> listarReservasPorNome(String texto) throws Exception {
+	public ArrayList<String> listarReservasPorNome(String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if (texto == "") {
+			if (nome.length()== 0) {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
@@ -253,9 +234,9 @@ public class Excursao {
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
-					String[] separacao = reserva.split("/");
+					String[] separador = reserva.split("/"); // ["cpf","nome"]
 
-					if (separacao[1].toUpperCase().contains(texto.toUpperCase())) {
+					if (separador[1].toUpperCase().contains(nome.toUpperCase())) {
 						registrosEncontrados.add(reserva);
 					}
 				}
@@ -273,65 +254,62 @@ public class Excursao {
 
 	// Método para salvar os detalhes da excursão em um arquivo de texto
 	public void salvar() throws Exception {
+		
 		String nomeArquivo = codigo + ".txt";
 
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/Registro/" + nomeArquivo))) {
+		try ( FileWriter escritor = new FileWriter( new File(".\\Registro\\"+nomeArquivo).getCanonicalPath())){
 			// Escreve o preço na primeira linha
-			writer.write(String.valueOf(preco));
-			writer.newLine();
+			escritor.write(String.valueOf(preco+"\n"));   
+		
 
 			// Escreve o máximo de reservas na segunda linha
-			writer.write(String.valueOf(maxReservas));
-			writer.newLine();
+			escritor.write(String.valueOf(maxReservas+"\n"));
+			
 
 			// Escreve as reservas no formato CPF/Nome em linhas subsequentes
-			
 			for (String reserva : listaReserva) {
+				escritor.write(reserva+ "\n");
 				
-				   
-				writer.write(reserva);
-				
-				writer.newLine();
 			}
 
 		} catch (IOException e) {
-			throw new Exception("Erro ao tentar salvar");
+			
+			throw new Exception("Erro ao salvar no arquivo");
+			
 		}
 	}
 
-	public void ler() {
+	public void ler() throws Exception {
 		String nomeArquivo = codigo + ".txt";
 
-		try (BufferedReader reader = new BufferedReader(new FileReader("src/Registro/" + nomeArquivo))) {
+		
+		
+		try (BufferedReader leitor = new BufferedReader(new FileReader(new File(".\\Registro\\"+nomeArquivo).getCanonicalPath()))) {
 			// Lê o preço da primeira linha
-			double preco = Double.parseDouble(reader.readLine());
+			double preco = Double.parseDouble(leitor.readLine());
 
 			// Lê o máximo de reservas da segunda linha
-			int maxReservas = Integer.parseInt(reader.readLine());
+			int maxReservas = Integer.parseInt(leitor.readLine());
 
 			// Lê as reservas do restante do arquivo
 			ArrayList<String> reservas = new ArrayList<>();
 			String linha;
-			while ((linha = reader.readLine()) != null) {
-				
-				
+			while ((linha = leitor.readLine()) != null) {
 				reservas.add(linha);
 			}
 
 			// Atualiza os dados da instância com os dados lidos
-			
-			
 			this.preco = preco;
 			this.maxReservas = maxReservas;
 			this.listaReserva = reservas;
 		} catch (IOException e) {
-			System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+			throw new Exception("Erro ao ler no arquivo");
 		}
 	}
 
 	public void existe() throws Exception {
 
-		File arquivo = new File("src/Registro/" + codigo + ".txt");
+		File arquivo = new File(".\\Registro\\" + codigo + ".txt");
 		if (arquivo.exists()) {
 			throw new Exception("Já existe uma excursão com o código " + codigo);
 		}
@@ -340,7 +318,7 @@ public class Excursao {
 
 	public void naoExiste() throws Exception {
 
-		File arquivo = new File("src/Registro/" + codigo + ".txt");
+		File arquivo = new File(".\\Registro\\" + codigo + ".txt");
 		if (!arquivo.exists()) {
 			throw new Exception("Não existe uma excursão com o codigo " + codigo);
 		}
