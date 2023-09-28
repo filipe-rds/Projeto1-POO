@@ -307,7 +307,7 @@ public class Excursao {
 
 	public void existe() throws Exception {
 
-		File arquivo = new File("src/Registro/" + codigo + ".txt");
+		File arquivo = new File("Registro/" + codigo + ".txt");
 		if (arquivo.exists()) {
 			throw new Exception("Já existe uma excursão com o código " + codigo);
 		}
@@ -316,7 +316,7 @@ public class Excursao {
 
 	public void naoExiste() throws Exception {
 
-		File arquivo = new File("src/Registro/" + codigo + ".txt");
+		File arquivo = new File("Registro/" + codigo + ".txt");
 		if (!arquivo.exists()) {
 			throw new Exception("Não existe uma excursão com o código " + codigo);
 		}
