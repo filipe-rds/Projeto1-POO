@@ -256,56 +256,51 @@ public class Excursao {
 	public void salvar() throws Exception {
 		String nomeArquivo = codigo + ".txt";
 
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/Registro/" + nomeArquivo))) {
+		try ( FileWriter escritor = new FileWriter( new File(".\\Registro\\"+nomeArquivo).getCanonicalPath())){
 			// Escreve o preço na primeira linha
-			writer.write(String.valueOf(preco));
-			writer.newLine();
+			escritor.write(String.valueOf(preco+"\n"));   
+		
 
 			// Escreve o máximo de reservas na segunda linha
-			writer.write(String.valueOf(maxReservas));
-			writer.newLine();
+			escritor.write(String.valueOf(maxReservas+"\n"));
+			
 
 			// Escreve as reservas no formato CPF/Nome em linhas subsequentes
-			
 			for (String reserva : listaReserva) {
+				escritor.write(reserva+ "\n");
 				
-				   
-				writer.write(reserva);
-				
-				writer.newLine();
 			}
 
 		} catch (IOException e) {
-			throw new Exception("Erro ao tentar salvar");
+			
+			throw new Exception("Erro ao salvar no arquivo");
+			
 		}
 	}
-	
 
-	public void ler() {
+	public void ler() throws Exception {
 		String nomeArquivo = codigo + ".txt";
 
-		try (BufferedReader reader = new BufferedReader(new FileReader("src/Registro/" + nomeArquivo))) {
+		try (BufferedReader leitor = new BufferedReader(new FileReader(new File(".\\Registro\\"+nomeArquivo).getCanonicalPath()))) {
 			// Lê o preço da primeira linha
-			double preco = Double.parseDouble(reader.readLine());
+			double preco = Double.parseDouble(leitor.readLine());
 
 			// Lê o máximo de reservas da segunda linha
-			int maxReservas = Integer.parseInt(reader.readLine());
+			int maxReservas = Integer.parseInt(leitor.readLine());
 
 			// Lê as reservas do restante do arquivo
 			ArrayList<String> reservas = new ArrayList<>();
 			String linha;
-			while ((linha = reader.readLine()) != null) {
+			while ((linha = leitor.readLine()) != null) {
 				reservas.add(linha);
 			}
 
 			// Atualiza os dados da instância com os dados lidos
-			
 			this.preco = preco;
 			this.maxReservas = maxReservas;
 			this.listaReserva = reservas;
-
 		} catch (IOException e) {
-			System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+			throw new Exception("Erro ao ler no arquivo");
 		}
 	}
 	
