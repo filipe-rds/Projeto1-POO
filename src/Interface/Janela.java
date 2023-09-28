@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import Processamento.Excursao;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class Janela {
 
@@ -33,6 +34,7 @@ public class Janela {
 
 	private Excursao excursao;
 	private boolean excursaoSelecionada = false;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -177,7 +179,7 @@ public class Janela {
 					lista = excursao.listarReservasPorNome("");
 					for (String str : lista) {
 						String[] separador = str.split("/");
-						textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
+						textAreaPainel.append(str + "\n");
 					}
 					textAreaPainel.setVisible(true);
 					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
@@ -427,8 +429,7 @@ public class Janela {
 						listaCpf = excursao.listarReservasPorCpf(cpf);
 
 						for (String str : listaCpf) {
-							String[] separador = str.split("/");
-							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n"); 
+							textAreaPainel.append(str + "\n"); 
 						}
 
 						textAreaPainel.setVisible(true);
@@ -484,8 +485,7 @@ public class Janela {
 						listaNome = excursao.listarReservasPorNome(nome);
 
 						for (String str : listaNome) {
-							String[] separador = str.split("/");
-							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
+							textAreaPainel.append(str + "\n");
 						}
 
 						textAreaPainel.setVisible(true);
@@ -549,13 +549,16 @@ public class Janela {
 		btnCalcularValorTotal.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCalcularValorTotal.setBounds(32, 361, 203, 38);
 		frame.getContentPane().add(btnCalcularValorTotal);
-
-		textAreaPainel = new JTextArea();
-		textAreaPainel.setBackground(Color.LIGHT_GRAY);
-		textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
-		textAreaPainel.setEditable(false);
-		textAreaPainel.setVisible(false);
-		textAreaPainel.setBounds(515, 32, 286, 367);
-		frame.getContentPane().add(textAreaPainel);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(515, 32, 286, 367);
+		frame.getContentPane().add(scrollPane);
+		
+				textAreaPainel = new JTextArea();
+				scrollPane.setViewportView(textAreaPainel);
+				textAreaPainel.setBackground(Color.LIGHT_GRAY);
+				textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
+				textAreaPainel.setEditable(false);
+				textAreaPainel.setVisible(false);
 	}
 }
