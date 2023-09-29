@@ -111,12 +111,12 @@ public class Excursao {
 			// }
 
 			for (int i = 0; i < listaReserva.size(); i++) {
-				String[] separador = listaReserva.get(i).split(" : "); // ["cpf","nome"]
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
 				if (separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					throw new Exception("Nome já está cadastrado");
 				}
 			}
-			listaReserva.add(cpf + " : " + nome);
+			listaReserva.add(cpf + "/" + nome);
 		} else {
 			throw new Exception("Limite excedido");
 		}
@@ -133,7 +133,7 @@ public class Excursao {
 			boolean nomeValido = false;
 
 			for (int i = 0; i < listaReserva.size(); i++) {
-				String[] separador = listaReserva.get(i).split(" : "); // ["cpf","nome"]
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
 				if (separador[0].equals(cpf) && separador[1].toUpperCase().equals(nome.toUpperCase())) {
 					listaReserva.remove(i);
@@ -169,7 +169,7 @@ public class Excursao {
 			boolean cancelamentoValido = false;
 
 			for (int i = listaReserva.size() - 1; i >= 0; i--) {
-				String[] separador = listaReserva.get(i).split(" : "); // ["cpf","nome"]
+				String[] separador = listaReserva.get(i).split("/"); // ["cpf","nome"]
 
 				if (separador[0].equals(cpf)) {
 					listaReserva.remove(i);
@@ -203,7 +203,7 @@ public class Excursao {
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
-					String[] separador = reserva.split(" : ");
+					String[] separador = reserva.split("/");
 
 					if (separador[0].contains(cpf)) {
 						registrosEncontrados.add(reserva);
@@ -234,7 +234,7 @@ public class Excursao {
 
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
-					String[] separador = reserva.split(" : "); // ["cpf","nome"]
+					String[] separador = reserva.split("/"); // ["cpf","nome"]
 
 					if (separador[1].toUpperCase().contains(nome.toUpperCase())) {
 						registrosEncontrados.add(reserva);

@@ -179,7 +179,7 @@ public class Janela {
 					lista = excursao.listarReservasPorNome("");
 					for (String str : lista) {
 						String[] separador = str.split("/");
-						textAreaPainel.append(str + "\n");
+						textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
 					}
 					textAreaPainel.setVisible(true);
 					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
@@ -413,14 +413,10 @@ public class Janela {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
 						
-						
-						
 
 						// Remove espaços em branco e caracteres não numéricos da entrada
 						try {
 							cpf = input.replaceAll("[^0-9]", "");
-							
-
 						} catch (Exception a) {
 							return;
 						}
@@ -429,7 +425,8 @@ public class Janela {
 						listaCpf = excursao.listarReservasPorCpf(cpf);
 
 						for (String str : listaCpf) {
-							textAreaPainel.append(str + "\n"); 
+							String[] separador = str.split("/");
+							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n"); 
 						}
 
 						textAreaPainel.setVisible(true);
@@ -485,7 +482,8 @@ public class Janela {
 						listaNome = excursao.listarReservasPorNome(nome);
 
 						for (String str : listaNome) {
-							textAreaPainel.append(str + "\n");
+							String[] separador = str.split("/");
+							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
 						}
 
 						textAreaPainel.setVisible(true);
