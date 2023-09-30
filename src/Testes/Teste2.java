@@ -1,27 +1,28 @@
 package Testes;
 
+import Processamento.Excursao;
+
 /**
  * TSI - POO - Prof. Fausto projeto1
  */
 
-import Processamento.Excursao;
-
 public class Teste2 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
 		// ------------Teste das exceções --------------------
 		try {
 			Excursao excursao = new Excursao(0, 0, 0);
+			System.out.println(excursao);
 			System.out.println("1--->não ok: construtor");
 		} catch (Exception erro) {
-			System.out.println("1---->ok" + erro.getMessage());
+			System.out.println("1---->ok" + erro.getMessage()); // 000 ok
 		}
 
 		try {
 			Excursao excursao = new Excursao(1, 1, 1);
 			excursao.criarReserva("111", "aaa");
 			excursao.criarReserva("222", "bbb");
-			System.out.println("2--->não ok: limite excedido");
+			System.out.println("2--->não ok: limite excedido"); // 
 		} catch (Exception erro) {
 			System.out.println("2---->ok" + erro.getMessage());
 		}

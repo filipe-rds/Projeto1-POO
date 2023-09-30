@@ -123,7 +123,9 @@ public class Janela {
 
 					Excursao temp = new Excursao(codigo, preco, max);
 					excursao = temp;
-					excursao.existe();
+					   
+					
+					
 					excursao.salvar();
 					
 
@@ -167,7 +169,6 @@ public class Janela {
 
 					Excursao temp = new Excursao(codigo);
 					excursao = temp;
-					excursao.naoExiste();
 					excursao.ler();
 					
 					
@@ -180,7 +181,8 @@ public class Janela {
 
 					lista = excursao.listarReservasPorNome("");
 					for (String str : lista) {
-						textAreaPainel.append(str + "\n");
+						String[] separador = str.split("/");
+						textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
 					}
 					textAreaPainel.setVisible(true);
 					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
@@ -427,10 +429,17 @@ public class Janela {
 						}
 						
 						textAreaPainel.setText("");
+						
+						
+						
+						
 						listaCpf = excursao.listarReservasPorCpf(cpf);
 
 						for (String str : listaCpf) {
-							textAreaPainel.append(str + "\n"); // Adicione a string e uma quebra de linha
+		
+							
+							String[] separador = str.split("/");
+							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
 						}
 
 						textAreaPainel.setVisible(true);
@@ -486,7 +495,9 @@ public class Janela {
 						listaNome = excursao.listarReservasPorNome(nome);
 
 						for (String str : listaNome) {
-							textAreaPainel.append(str + "\n"); // Adicione a string e uma quebra de linha
+							
+							String[] separador = str.split("/");
+							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
 						}
 
 						textAreaPainel.setVisible(true);

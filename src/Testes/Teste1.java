@@ -1,16 +1,16 @@
 package Testes;
+
 import Processamento.Excursao;
+
 /**
  * TSI - POO - Prof. Fausto projeto1
  */
 
-//import Processamento.Excursao;
-
 public class Teste1 {
-	public static void main(String[] args) {
+	public static void main(String[] args)throws Exception {
 		try {
-			Excursao excursao = new Excursao(1234, 100.0, 20);
-			System.out.println("excursao:" + excursao);
+			Excursao excursao = new Excursao(1234, 100.0, 20); // ok
+			System.out.println("excursao:" + excursao); // ok
 
 			excursao.criarReserva("111", "joao");
 			excursao.criarReserva("222", "maria");
@@ -21,14 +21,14 @@ public class Teste1 {
 			excursao.criarReserva("555", "joana");
 
 			System.out.println("\nlistar todas as reservas");
-			System.out.println(excursao.listarReservasPorCpf(""));
+			System.out.println(excursao.listarReservasPorCpf(""));  //ok
 			System.out.println("\nlistar as reservas por cpf");
-			System.out.println(excursao.listarReservasPorCpf("3"));
+			System.out.println(excursao.listarReservasPorCpf("3")); //ok
 			System.out.println("\nlistar as reservas por nome");
-			System.out.println(excursao.listarReservasPorNome("jo"));
+			System.out.println(excursao.listarReservasPorNome("jo")); //ok 
 
-			excursao.cancelarReserva("555", "claudia");
-			excursao.cancelarReserva("333");
+			//excursao.cancelarReserva("555", "claudia");
+			excursao.cancelarReserva("333"); //ok
 
 			System.out.println("\nlistar todas as reservas");
 			System.out.println(excursao.listarReservasPorCpf(""));
