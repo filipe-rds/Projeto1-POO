@@ -1,7 +1,6 @@
 package Processamento;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,10 +15,25 @@ public class Excursao {
 	private ArrayList<String> listaReserva = new ArrayList<>();
 
 	// Constructors
+
+	/*
+	 Construtor que recebe como parâmetro o código, preço e número máximo de reservas da excursão e verifica se já existe uma excursão com o código informado, caso não haja convergência, ele cria uma nova excursão com os dados informados. 
+	*/
 	public Excursao(int codigo, double preco, int maxReservas) throws Exception {
 		boolean codigoInvalido = false;
 		boolean precoInvalido = false;
 		boolean maxReservasInvalido = false;
+
+		File pasta = new File("./Registro");
+
+		if (!pasta.exists()) {
+			pasta.mkdir();
+		}
+
+		File arquivo = new File("Registro/" + codigo + ".txt");
+		if (arquivo.exists()) {
+			throw new Exception("Já existe uma excursão com o código " + codigo);
+		}
 
 		if (codigo > 0) {
 			this.codigo = codigo;
@@ -58,14 +72,28 @@ public class Excursao {
 
 	}
 
-	public Excursao(int codigo) {
+	/*
+	 Construtor que recebe como parâmetro o código da excursão e verifica se existe um arquivo de texto com esse código, caso haja convergência, ele lê os dados do arquivo e atualiza os dados da instância com os dados lidos.
+	*/
+	public Excursao(int codigo) throws Exception {
+
+		File pasta = new File("./Registro");
+
+		if (!pasta.exists()) {
+			pasta.mkdir();
+		}
+
+		File arquivo = new File("Registro/" + codigo + ".txt");
+		if (!arquivo.exists()) {
+			throw new Exception("Não existe uma excursão com o código " + codigo);
+		}
+
 		this.codigo = codigo;
 		listaReserva = new ArrayList<>();
 	}
 
-	public Excursao() {
-		// Construtor vazio
-	}
+	// Construtor vazio
+	public Excursao() {} 
 
 	// Getters and Setters
 	public int getCodigo() {
@@ -101,13 +129,14 @@ public class Excursao {
 	}
 
 	// Methods
-	public void criarReserva(String cpf, String nome) throws Exception {
-		// Adiciona uma reserva “cpf/nome”
-		// Verificar se existe um nome igual na lista
 
+	/* 
+	 Método que recebe como parâmetro o CPF e o nome do cliente e verifica se existe uma reserva com esses dados, caso não haja convergência, haverá a criação desta reserva.
+	*/
+	public void criarReserva(String cpf, String nome) throws Exception {
 		if (listaReserva.size() < maxReservas) {
 			// if(cpf.length()!=11) {
-			// 	throw new Exception("CPF deve conter 11 dígitos");
+			// throw new Exception("CPF deve conter 11 dígitos");
 			// }
 
 			for (int i = 0; i < listaReserva.size(); i++) {
@@ -122,12 +151,15 @@ public class Excursao {
 		}
 	}
 
+	/*  
+	 Método que recebe como parâmetro o CPF e o nome do cliente e verifica se existe uma reserva com esses dados, caso haja convergência, haverá a remoção desta reserva.
+	*/
 	public void cancelarReserva(String cpf, String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
 			// if(cpf.length()!=11) {
-			// 	throw new Exception("CPF deve conter 11 dígitos");
+			// throw new Exception("CPF deve conter 11 dígitos");
 			// }
-			
+
 			boolean cancelamentoValido = false;
 			boolean cpfValido = false;
 			boolean nomeValido = false;
@@ -161,10 +193,13 @@ public class Excursao {
 
 	}
 
+	/* 
+	 Método que recebe como parâmetro o CPF do cliente e verifica se existe uma reserva com esse CPF, caso haja convergência, haverá a remoção desta reserva.
+	*/
 	public void cancelarReserva(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
 			// if(cpf.length()!=11) {
-			// 	throw new Exception("CPF deve conter 11 dígitos");
+			// throw new Exception("CPF deve conter 11 dígitos");
 			// }
 			boolean cancelamentoValido = false;
 
@@ -186,9 +221,12 @@ public class Excursao {
 
 	}
 
+	/*
+	 Método que recebe como parâmetro o CPF do cliente (completo ou parte dele) e verifica se existe reservas com esse CPF, caso haja convergência, ele retorna uma lista com as reservas encontradas.
+	*/
 	public ArrayList<String> listarReservasPorCpf(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if (cpf.length()== 0) {
+			if (cpf.length() == 0) {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
@@ -198,7 +236,7 @@ public class Excursao {
 
 			} else {
 				// if(cpf.length()!=11) {
-				// 	throw new Exception("CPF deve conter 11 dígitos");
+				// throw new Exception("CPF deve conter 11 dígitos");
 				// }
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
@@ -220,9 +258,12 @@ public class Excursao {
 		}
 	}
 
+	/* 
+	 Método que recebe como parâmetro o nome do cliente (completo ou parte dele) e verifica se existe reservas com esse nome, caso haja convergência, ele retorna uma lista com as reservas encontradas.
+	*/
 	public ArrayList<String> listarReservasPorNome(String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
-			if (nome.length()== 0) {
+			if (nome.length() == 0) {
 				ArrayList<String> registroTotal = new ArrayList<String>();
 				for (int i = 0; i < listaReserva.size(); i++) {
 					String reserva = listaReserva.get(i);
@@ -256,32 +297,29 @@ public class Excursao {
 	public void salvar() throws Exception {
 		String nomeArquivo = codigo + ".txt";
 
-		try ( FileWriter escritor = new FileWriter( new File(".\\Registro\\"+nomeArquivo).getCanonicalPath())){
+		try (FileWriter escritor = new FileWriter(new File(".\\Registro\\" + nomeArquivo).getCanonicalPath())) {
 			// Escreve o preço na primeira linha
-			escritor.write(String.valueOf(preco+"\n"));   
-		
+			escritor.write(String.valueOf(preco + "\n"));
 
 			// Escreve o máximo de reservas na segunda linha
-			escritor.write(String.valueOf(maxReservas+"\n"));
-			
+			escritor.write(String.valueOf(maxReservas + "\n"));
 
 			// Escreve as reservas no formato CPF/Nome em linhas subsequentes
 			for (String reserva : listaReserva) {
-				escritor.write(reserva+ "\n");
-				
+				escritor.write(reserva + "\n");
 			}
 
 		} catch (IOException e) {
-			
 			throw new Exception("Erro ao salvar no arquivo");
-			
 		}
 	}
 
+	// Método para ler os detalhes da excursão em um arquivo de texto
 	public void ler() throws Exception {
 		String nomeArquivo = codigo + ".txt";
 
-		try (BufferedReader leitor = new BufferedReader(new FileReader(new File(".\\Registro\\"+nomeArquivo).getCanonicalPath()))) {
+		try (BufferedReader leitor = new BufferedReader(
+				new FileReader(new File(".\\Registro\\" + nomeArquivo).getCanonicalPath()))) {
 			// Lê o preço da primeira linha
 			double preco = Double.parseDouble(leitor.readLine());
 
@@ -303,31 +341,14 @@ public class Excursao {
 			throw new Exception("Erro ao ler no arquivo");
 		}
 	}
-	
 
-	public void existe() throws Exception {
-
-		File arquivo = new File("Registro/" + codigo + ".txt");
-		if (arquivo.exists()) {
-			throw new Exception("Já existe uma excursão com o código " + codigo);
-		}
-
-	}
-
-	public void naoExiste() throws Exception {
-
-		File arquivo = new File("Registro/" + codigo + ".txt");
-		if (!arquivo.exists()) {
-			throw new Exception("Não existe uma excursão com o código " + codigo);
-		}
-
-	}
-
+	// Método para calcular o valor total da excursão
 	public double calcularValorTotal() {
 		double valorTotal = this.preco * listaReserva.size();
 		return valorTotal;
 	}
 
+	// Método para retornar os dados da excursão em uma string
 	@Override
 	public String toString() {
 		return "Excursao [codigo=" + codigo + ", preco=" + preco + ", maxReservas=" + maxReservas

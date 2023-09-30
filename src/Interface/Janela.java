@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +14,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import Processamento.Excursao;
 import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 
 public class Janela {
 
@@ -31,14 +29,12 @@ public class Janela {
 	private JLabel labelCodigoDaExcursaoAtual;
 	private JLabel labelNenhumaExcursaoSelecionada;
 	private JTextArea textAreaPainel;
-
 	private Excursao excursao;
 	private boolean excursaoSelecionada = false;
-	private JScrollPane scrollPane;
 
-	/**
-	 * Launch the application.
-	 */
+	/*
+	  Launch the application.
+	*/
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -53,9 +49,9 @@ public class Janela {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
+	/*
+	  Create the application.
+	*/
 
 	public Janela() {
 		initialize();
@@ -67,9 +63,9 @@ public class Janela {
 		}
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	/*
+	  Initialize the contents of the frame.
+	*/
 
 	private void initialize() {
 		frame = new JFrame();
@@ -84,12 +80,15 @@ public class Janela {
 		frame.setLocationRelativeTo(null);
 
 		btnCriarExcursao = new JButton("Criar excursão");
-		
+
 		btnCriarExcursao.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCriarExcursao.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCriarExcursao.setForeground(UIManager.getColor("Button.foreground"));
 		btnCriarExcursao.setBackground(UIManager.getColor("Button.background"));
-	
+
+		/*
+		 Botão responsável por criar uma nova excursão, ele recebe o código, o preço e a quantidade máxima de pessoas e salva as informações em um arquivo.
+		*/
 		btnCriarExcursao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int codigo;
@@ -97,7 +96,7 @@ public class Janela {
 				int max;
 				textAreaPainel.setVisible(false);
 				textAreaPainel.setText("");
-				
+
 				try {
 
 					String codigoStr = JOptionPane.showInputDialog(frame, "Digite o código da sua excursão");
@@ -108,7 +107,6 @@ public class Janela {
 					codigo = Integer.parseInt(codigoStr);
 
 					String precoStr = JOptionPane.showInputDialog(frame, "Digite o preço por pessoa");
-
 					if (precoStr == null) {
 						return;
 					}
@@ -125,9 +123,8 @@ public class Janela {
 
 					Excursao temp = new Excursao(codigo, preco, max);
 					excursao = temp;
-					excursao.existe();
+
 					excursao.salvar();
-					
 
 					JOptionPane.showMessageDialog(frame, "Sua excursão foi criada com sucesso.");
 					String codstr = String.valueOf(codigo);
@@ -150,9 +147,12 @@ public class Janela {
 		btnRecuperarExcursao.setBackground(Color.WHITE);
 		btnRecuperarExcursao.setFont(new Font("Arial", Font.BOLD, 12));
 		btnRecuperarExcursao.setHorizontalAlignment(SwingConstants.LEFT);
+		/*
+		 Botão responsável por recuperar uma excursão, ele recebe o código e recupera as informações de um arquivo.
+		*/
 		btnRecuperarExcursao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				textAreaPainel.setVisible(false);
 				textAreaPainel.setText("");
 				int codigo;
@@ -169,9 +169,8 @@ public class Janela {
 
 					Excursao temp = new Excursao(codigo);
 					excursao = temp;
-					excursao.naoExiste();
 					excursao.ler();
-					
+
 					String codstr = String.valueOf(codigo);
 					labelNenhumaExcursaoSelecionada.setText(codstr);
 					excursaoSelecionada = true;
@@ -179,11 +178,10 @@ public class Janela {
 					lista = excursao.listarReservasPorNome("");
 					for (String str : lista) {
 						String[] separador = str.split("/");
-						textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
+						textAreaPainel.append(separador[0] + " - " + separador[1] + "\n");
 					}
 					textAreaPainel.setVisible(true);
 					JOptionPane.showMessageDialog(frame, "Excursão recuperada com sucesso");
-
 
 				} catch (NumberFormatException a) {
 					JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.");
@@ -200,6 +198,9 @@ public class Janela {
 		btnCriarReserva = new JButton("Criar reserva");
 		btnCriarReserva.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCriarReserva.setHorizontalAlignment(SwingConstants.LEFT);
+		/*
+		 Botão responsável por criar uma reserva em uma excurssão, ele recebe o CPF e o nome do cliente e salva as informações em um arquivo. 
+		*/
 		btnCriarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textAreaPainel.setVisible(false);
@@ -207,7 +208,6 @@ public class Janela {
 
 				String cpf = "";
 				String nome = "";
-				
 
 				if (excursaoSelecionada) {
 					try {
@@ -250,33 +250,30 @@ public class Janela {
 						excursao.salvar();
 						textAreaPainel.setVisible(false);
 						textAreaPainel.setText("");
-						
 
 					} catch (Exception d) {
 						JOptionPane.showMessageDialog(frame, "Erro: " + d.getMessage());
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame,"Reserva realizada com sucesso");
+					JOptionPane.showMessageDialog(frame, "Reserva realizada com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
-				
+
 			}
-			
+
 		});
 		btnCriarReserva.setBounds(32, 121, 203, 38);
 		frame.getContentPane().add(btnCriarReserva);
 
 		btnCancelarReservaIndividual = new JButton("Cancelar reserva individual");
-		btnCancelarReservaIndividual.setToolTipText("Cancele a reserva individualmente");
 		btnCancelarReservaIndividual.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCancelarReservaIndividual.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		
-		
-		
+		/*
+		Botão responsável por cancelar uma reserva individual em uma excurssão, ele recebe o CPF e o nome do cliente e remove esta reserva, posteriormente é salvo as informações atuais da excursão em um arquivo.
+		*/
 		btnCancelarReservaIndividual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = "";
@@ -298,8 +295,6 @@ public class Janela {
 						} catch (Exception a) {
 							return;
 						}
-
-						
 
 					} catch (NumberFormatException b) {
 						JOptionPane.showMessageDialog(frame, "Erro: Por favor, insira valores numéricos válidos");
@@ -331,19 +326,22 @@ public class Janela {
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame,"Cancelamento do CPF " + cpf + " e nome " + nome+ " feito com sucesso");
+					JOptionPane.showMessageDialog(frame,
+							"Cancelamento do CPF " + cpf + " e nome " + nome + " feito com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
 
 			}
-		}
-		);
+		});
 		btnCancelarReservaIndividual.setBounds(32, 169, 203, 38);
 		frame.getContentPane().add(btnCancelarReservaIndividual);
 
 		btnCancelarReservaGrupo = new JButton("Cancelar reserva grupo");
+		/*
+		Botão responsável por cancelar uma reserva em grupo em uma excurssão, ele recebe o CPF do grupo e remove todas as reservas que possuem este CPF, e posteriormente é salvo as informações atuais da excursão em um arquivo.
+		*/
 		btnCancelarReservaGrupo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = "";
@@ -365,7 +363,6 @@ public class Janela {
 						} catch (Exception a) {
 							return;
 						}
-						
 
 						excursao.cancelarReserva(cpf);
 						excursao.salvar();
@@ -381,7 +378,8 @@ public class Janela {
 						return;
 					}
 
-					JOptionPane.showMessageDialog(frame,"Todas as reservas feitas no CPF " + cpf + " foram canceladas com sucesso");
+					JOptionPane.showMessageDialog(frame,
+							"Todas as reservas feitas no CPF " + cpf + " foram canceladas com sucesso");
 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
@@ -393,6 +391,9 @@ public class Janela {
 		btnCancelarReservaGrupo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCancelarReservaGrupo.setBounds(32, 217, 203, 38);
 		frame.getContentPane().add(btnCancelarReservaGrupo);
+		/*
+		Botão responsável por listar as reservas de uma excursão por CPF (completo ou parte dele), ele recebe o CPF e retorna todas as reservas que possuem este CPF. 
+		*/
 
 		btnListarReservaPorCPF = new JButton("Listar reserva por CPF");
 		btnListarReservaPorCPF.addActionListener(new ActionListener() {
@@ -401,7 +402,6 @@ public class Janela {
 				textAreaPainel.setText("");
 				String cpf = "";
 				ArrayList<String> listaCpf = new ArrayList<>();
-				
 
 				if (excursaoSelecionada) {
 					if (excursao.getListaReserva().isEmpty()) {
@@ -412,40 +412,38 @@ public class Janela {
 					try {
 						String input = JOptionPane.showInputDialog(frame,
 								"Digite o CPF, qualquer outro caracter, será desconsiderado");
-						
 
 						// Remove espaços em branco e caracteres não numéricos da entrada
 						try {
 							cpf = input.replaceAll("[^0-9]", "");
+
 						} catch (Exception a) {
 							return;
 						}
-						
+
 						textAreaPainel.setText("");
+
 						listaCpf = excursao.listarReservasPorCpf(cpf);
 
 						for (String str : listaCpf) {
 							String[] separador = str.split("/");
-							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n"); 
+							textAreaPainel.append(separador[0] + " - " + separador[1] + "\n");
 						}
 
 						textAreaPainel.setVisible(true);
-						
-						
 
 					} catch (Exception b) {
 						JOptionPane.showMessageDialog(frame, "Erro: " + b.getMessage());
 						return;
 
 					}
-					
-					if ( cpf.isEmpty()){ 
+
+					if (cpf.isEmpty()) {
 						JOptionPane.showMessageDialog(frame, "Todas as reservas feitas");
-					}else {
+					} else {
 						JOptionPane.showMessageDialog(frame, "Lista de reservas por CPF: " + cpf);
 					}
-					
-					
+
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
 				}
@@ -456,6 +454,10 @@ public class Janela {
 		btnListarReservaPorCPF.setHorizontalAlignment(SwingConstants.LEFT);
 		btnListarReservaPorCPF.setBounds(32, 265, 203, 38);
 		frame.getContentPane().add(btnListarReservaPorCPF);
+
+		/*
+		 Botão responsável por listar as reservas de uma excursão por nome (completo ou parte dele), ele recebe o nome e retorna todas as reservas que possuem este nome. 
+		*/
 
 		btnListarReservaPorNome = new JButton("Listar reserva por nome");
 		btnListarReservaPorNome.addActionListener(new ActionListener() {
@@ -473,17 +475,17 @@ public class Janela {
 
 					try {
 						nome = JOptionPane.showInputDialog(frame, "Digite o nome");
-						
-						
-						if (nome==null) {
+
+						if (nome == null) {
 							return;
 						}
 						textAreaPainel.setText("");
 						listaNome = excursao.listarReservasPorNome(nome);
 
 						for (String str : listaNome) {
+
 							String[] separador = str.split("/");
-							textAreaPainel.append(separador[0] + " - " + separador[1]+ "\n");
+							textAreaPainel.append(separador[0] + " - " + separador[1] + "\n");
 						}
 
 						textAreaPainel.setVisible(true);
@@ -493,13 +495,13 @@ public class Janela {
 						return;
 
 					}
-					if (nome.isEmpty()){ 
-						JOptionPane.showMessageDialog(frame, "Todas as reservas feitas");}
-					else
-					JOptionPane.showMessageDialog(frame, "Lista de reservas pelo nome: "+ nome);
+					if (nome.isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Todas as reservas feitas");
+					} else
+						JOptionPane.showMessageDialog(frame, "Lista de reservas pelo nome: " + nome);
 				} else {
 					JOptionPane.showMessageDialog(frame, "Erro: Não tem nenhuma excursão selecionada");
-					
+
 				}
 			}
 		});
@@ -509,7 +511,6 @@ public class Janela {
 
 		frame.getContentPane().add(btnListarReservaPorNome);
 
-		
 		labelCodigoDaExcursaoAtual = new JLabel("Código da excursão atual:");
 		labelCodigoDaExcursaoAtual.setHorizontalAlignment(SwingConstants.LEFT);
 		labelCodigoDaExcursaoAtual.setForeground(new Color(255, 0, 0));
@@ -523,6 +524,10 @@ public class Janela {
 		labelNenhumaExcursaoSelecionada.setFont(new Font("Monospaced", Font.BOLD, 18));
 		labelNenhumaExcursaoSelecionada.setBounds(267, 423, 335, 24);
 		frame.getContentPane().add(labelNenhumaExcursaoSelecionada);
+
+		/*
+		 Botão responsável por calcular o valor total de uma excursão, ele processa os atributos da excursão e retorna o valor total.
+		*/
 
 		btnCalcularValorTotal = new JButton("Calcular valor total");
 		btnCalcularValorTotal.addActionListener(new ActionListener() {
@@ -547,16 +552,13 @@ public class Janela {
 		btnCalcularValorTotal.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCalcularValorTotal.setBounds(32, 361, 203, 38);
 		frame.getContentPane().add(btnCalcularValorTotal);
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(515, 32, 286, 367);
-		frame.getContentPane().add(scrollPane);
-		
-				textAreaPainel = new JTextArea();
-				scrollPane.setViewportView(textAreaPainel);
-				textAreaPainel.setBackground(Color.LIGHT_GRAY);
-				textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
-				textAreaPainel.setEditable(false);
-				textAreaPainel.setVisible(false);
+
+		textAreaPainel = new JTextArea();
+		textAreaPainel.setBackground(Color.LIGHT_GRAY);
+		textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
+		textAreaPainel.setEditable(false);
+		textAreaPainel.setVisible(false);
+		textAreaPainel.setBounds(515, 32, 286, 367);
+		frame.getContentPane().add(textAreaPainel);
 	}
 }
