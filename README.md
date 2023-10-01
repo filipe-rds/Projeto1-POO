@@ -3,6 +3,7 @@
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/filipe-rds/Projeto1-POO?color=black">
   <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/filipe-rds/Projeto1-POO?color=black">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/filipe-rds/Projeto1-POO?color=black">
+  <img alt="GitHub license" src="https://img.shields.io/github/license/filipe-rds/Projeto1-POO?color=black"><img>
 </p>
 
 <div style="display: inline_block" ><br>
