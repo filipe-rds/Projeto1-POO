@@ -6,7 +6,7 @@
   <img alt="GitHub license" src="https://img.shields.io/github/license/filipe-rds/Projeto1-POO?color=black"><img>
 </p>
 <div align="center">
-  <img src="preview.png" height="400" width="700"><br>
+  <img src="./assets/preview.png" height="300" width="500"><br>
 </div>
 <div style="display: inline_block" ><br>
     <h3>👾 Objetivo:</h3>
