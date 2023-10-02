@@ -26,7 +26,7 @@ public class Teste1 {
 			System.out.println("\nlistar as reservas por nome");
 			System.out.println(excursao.listarReservasPorNome("jo"));
 
-			excursao.cancelarReserva("555", "claudia"); // Exceção
+			excursao.cancelarReserva("555", "antonio");
 			excursao.cancelarReserva("333");
 
 			System.out.println("\nlistar todas as reservas");
