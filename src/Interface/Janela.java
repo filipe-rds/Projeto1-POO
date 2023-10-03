@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import Processamento.Excursao;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class Janela {
 
@@ -31,6 +32,7 @@ public class Janela {
 	private JTextArea textAreaPainel;
 	private Excursao excursao;
 	private boolean excursaoSelecionada = false;
+	private JScrollPane scrollPane;
 
 	/*
 	  Launch the application.
@@ -140,7 +142,7 @@ public class Janela {
 			}
 		});
 
-		btnCriarExcursao.setBounds(32, 25, 203, 38);
+		btnCriarExcursao.setBounds(32, 59, 203, 38);
 		frame.getContentPane().add(btnCriarExcursao);
 
 		btnRecuperarExcursao = new JButton("Recuperar excursão");
@@ -192,7 +194,7 @@ public class Janela {
 		}
 
 		);
-		btnRecuperarExcursao.setBounds(32, 73, 203, 38);
+		btnRecuperarExcursao.setBounds(263, 59, 203, 38);
 		frame.getContentPane().add(btnRecuperarExcursao);
 
 		btnCriarReserva = new JButton("Criar reserva");
@@ -265,7 +267,7 @@ public class Janela {
 			}
 
 		});
-		btnCriarReserva.setBounds(32, 121, 203, 38);
+		btnCriarReserva.setBounds(32, 163, 203, 38);
 		frame.getContentPane().add(btnCriarReserva);
 
 		btnCancelarReservaIndividual = new JButton("Cancelar reserva individual");
@@ -335,7 +337,7 @@ public class Janela {
 
 			}
 		});
-		btnCancelarReservaIndividual.setBounds(32, 169, 203, 38);
+		btnCancelarReservaIndividual.setBounds(32, 239, 203, 38);
 		frame.getContentPane().add(btnCancelarReservaIndividual);
 
 		btnCancelarReservaGrupo = new JButton("Cancelar reserva grupo");
@@ -389,7 +391,7 @@ public class Janela {
 		});
 		btnCancelarReservaGrupo.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCancelarReservaGrupo.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCancelarReservaGrupo.setBounds(32, 217, 203, 38);
+		btnCancelarReservaGrupo.setBounds(32, 310, 203, 38);
 		frame.getContentPane().add(btnCancelarReservaGrupo);
 		/*
 		Botão responsável por listar as reservas de uma excursão através do CPF fornecido (completo ou parte dele), ele recebe o CPF e retorna todas as reservas que possuem este CPF. 
@@ -451,7 +453,7 @@ public class Janela {
 		});
 		btnListarReservaPorCPF.setFont(new Font("Arial", Font.BOLD, 12));
 		btnListarReservaPorCPF.setHorizontalAlignment(SwingConstants.LEFT);
-		btnListarReservaPorCPF.setBounds(32, 265, 203, 38);
+		btnListarReservaPorCPF.setBounds(263, 239, 203, 38);
 		frame.getContentPane().add(btnListarReservaPorCPF);
 
 		/*
@@ -506,7 +508,7 @@ public class Janela {
 		});
 		btnListarReservaPorNome.setFont(new Font("Arial", Font.BOLD, 12));
 		btnListarReservaPorNome.setHorizontalAlignment(SwingConstants.LEFT);
-		btnListarReservaPorNome.setBounds(32, 313, 203, 38);
+		btnListarReservaPorNome.setBounds(263, 163, 203, 38);
 
 		frame.getContentPane().add(btnListarReservaPorNome);
 
@@ -547,15 +549,18 @@ public class Janela {
 		});
 		btnCalcularValorTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCalcularValorTotal.setFont(new Font("Arial", Font.BOLD, 12));
-		btnCalcularValorTotal.setBounds(32, 361, 203, 38);
+		btnCalcularValorTotal.setBounds(263, 310, 203, 38);
 		frame.getContentPane().add(btnCalcularValorTotal);
-
-		textAreaPainel = new JTextArea();
-		textAreaPainel.setBackground(Color.LIGHT_GRAY);
-		textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
-		textAreaPainel.setEditable(false);
-		textAreaPainel.setVisible(false);
-		textAreaPainel.setBounds(515, 32, 286, 367);
-		frame.getContentPane().add(textAreaPainel);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(515, 59, 317, 289);
+		frame.getContentPane().add(scrollPane);
+		
+				textAreaPainel = new JTextArea();
+				scrollPane.setViewportView(textAreaPainel);
+				textAreaPainel.setBackground(Color.LIGHT_GRAY);
+				textAreaPainel.setFont(new Font("Arial", Font.BOLD, 15));
+				textAreaPainel.setEditable(false);
+				textAreaPainel.setVisible(false);
 	}
 }
