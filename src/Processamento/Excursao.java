@@ -73,7 +73,7 @@ public class Excursao {
 	}
 
 	/*
-	 Construtor que recebe como parâmetro o código da excursão e verifica se existe um arquivo de texto com esse código, caso haja convergência, ele lê os dados do arquivo e atualiza os dados da instância com os dados lidos.
+	 Construtor que recebe como parâmetro o código da excursão e verifica se já existe uma excursão com o código informado, caso haja convergência, ele inicializa a excursão com o dado fornecido.
 	*/
 	public Excursao(int codigo) throws Exception {
 
@@ -131,7 +131,7 @@ public class Excursao {
 	// Methods
 
 	/* 
-	 Método que recebe como parâmetro o CPF e o nome do cliente e verifica se existe uma reserva com esses dados, caso não haja convergência, haverá a criação desta reserva.
+	 Método que recebe como parâmetro o CPF e o nome do cliente e verifica se existe uma reserva com estes dados, caso não haja convergência, haverá a criação desta reserva.
 	*/
 	public void criarReserva(String cpf, String nome) throws Exception {
 		if (listaReserva.size() < maxReservas) {
@@ -152,7 +152,7 @@ public class Excursao {
 	}
 
 	/*  
-	 Método que recebe como parâmetro o CPF e o nome do cliente e verifica se existe uma reserva com esses dados, caso haja convergência, haverá a remoção desta reserva.
+	 Método que recebe como parâmetro o CPF e o nome do cliente e verifica se existe uma reserva com estes dados, caso haja convergência, haverá a remoção desta reserva.
 	*/
 	public void cancelarReserva(String cpf, String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
@@ -194,7 +194,7 @@ public class Excursao {
 	}
 
 	/* 
-	 Método que recebe como parâmetro o CPF do cliente e verifica se existe uma reserva com esse CPF, caso haja convergência, haverá a remoção desta reserva.
+	 Método que recebe como parâmetro o CPF do cliente e verifica se existem reservas com este CPF, caso haja convergência, haverá a remoção das reservas encontradas.
 	*/
 	public void cancelarReserva(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
@@ -222,7 +222,7 @@ public class Excursao {
 	}
 
 	/*
-	 Método que recebe como parâmetro o CPF do cliente (completo ou parte dele) e verifica se existe reservas com esse CPF, caso haja convergência, ele retorna uma lista com as reservas encontradas.
+	 Método que recebe como parâmetro o CPF do cliente (completo ou parte dele) e verifica se existem reservas com este CPF, caso haja convergência, ele retorna uma lista com as reservas encontradas.
 	*/
 	public ArrayList<String> listarReservasPorCpf(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
@@ -259,7 +259,7 @@ public class Excursao {
 	}
 
 	/* 
-	 Método que recebe como parâmetro o nome do cliente (completo ou parte dele) e verifica se existe reservas com esse nome, caso haja convergência, ele retorna uma lista com as reservas encontradas.
+	 Método que recebe como parâmetro o nome do cliente (completo ou parte dele) e verifica se existem reservas com este nome, caso haja convergência, ele retorna uma lista com as reservas encontradas.
 	*/
 	public ArrayList<String> listarReservasPorNome(String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {

@@ -148,7 +148,7 @@ public class Janela {
 		btnRecuperarExcursao.setFont(new Font("Arial", Font.BOLD, 12));
 		btnRecuperarExcursao.setHorizontalAlignment(SwingConstants.LEFT);
 		/*
-		 Botão responsável por recuperar uma excursão, ele recebe o código e recupera as informações de um arquivo.
+		 Botão responsável por recuperar uma excursão, ele recebe o código e recupera as informações da excursão através de um arquivo.
 		*/
 		btnRecuperarExcursao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -199,7 +199,7 @@ public class Janela {
 		btnCriarReserva.setFont(new Font("Arial", Font.BOLD, 12));
 		btnCriarReserva.setHorizontalAlignment(SwingConstants.LEFT);
 		/*
-		 Botão responsável por criar uma reserva em uma excurssão, ele recebe o CPF e o nome do cliente e salva as informações em um arquivo. 
+		 Botão responsável por criar uma reserva em uma excurssão, ele recebe o CPF e o nome do cliente e salva as informações da excurção em um arquivo. 
 		*/
 		btnCriarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -340,7 +340,7 @@ public class Janela {
 
 		btnCancelarReservaGrupo = new JButton("Cancelar reserva grupo");
 		/*
-		Botão responsável por cancelar uma reserva em grupo em uma excurssão, ele recebe o CPF do grupo e remove todas as reservas que possuem este CPF, e posteriormente é salvo as informações atuais da excursão em um arquivo.
+		Botão responsável por cancelar uma reserva em grupo da excurssão, ele recebe o CPF do grupo e remove todas as reservas que possuem este CPF, e posteriormente é salvo as informações atuais da excursão em um arquivo.
 		*/
 		btnCancelarReservaGrupo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -392,9 +392,8 @@ public class Janela {
 		btnCancelarReservaGrupo.setBounds(32, 217, 203, 38);
 		frame.getContentPane().add(btnCancelarReservaGrupo);
 		/*
-		Botão responsável por listar as reservas de uma excursão por CPF (completo ou parte dele), ele recebe o CPF e retorna todas as reservas que possuem este CPF. 
+		Botão responsável por listar as reservas de uma excursão através do CPF fornecido (completo ou parte dele), ele recebe o CPF e retorna todas as reservas que possuem este CPF. 
 		*/
-
 		btnListarReservaPorCPF = new JButton("Listar reserva por CPF");
 		btnListarReservaPorCPF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -456,7 +455,7 @@ public class Janela {
 		frame.getContentPane().add(btnListarReservaPorCPF);
 
 		/*
-		 Botão responsável por listar as reservas de uma excursão por nome (completo ou parte dele), ele recebe o nome e retorna todas as reservas que possuem este nome. 
+		 Botão responsável por listar as reservas de uma excursão através do nome fornecido (completo ou parte dele), ele recebe o nome e retorna todas as reservas que possuem este nome. 
 		*/
 
 		btnListarReservaPorNome = new JButton("Listar reserva por nome");
@@ -524,11 +523,9 @@ public class Janela {
 		labelNenhumaExcursaoSelecionada.setFont(new Font("Monospaced", Font.BOLD, 18));
 		labelNenhumaExcursaoSelecionada.setBounds(267, 423, 335, 24);
 		frame.getContentPane().add(labelNenhumaExcursaoSelecionada);
-
 		/*
-		 Botão responsável por calcular o valor total de uma excursão, ele processa os atributos da excursão e retorna o valor total.
+		 Botão responsável por retornar o valor total da excursão.
 		*/
-
 		btnCalcularValorTotal = new JButton("Calcular valor total");
 		btnCalcularValorTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
