@@ -227,13 +227,7 @@ public class Excursao {
 	public ArrayList<String> listarReservasPorCpf(String cpf) throws Exception {
 		if (!listaReserva.isEmpty()) {
 			if (cpf.length() == 0) {
-				ArrayList<String> registroTotal = new ArrayList<String>();
-				for (int i = 0; i < listaReserva.size(); i++) {
-					String reserva = listaReserva.get(i);
-					registroTotal.add(reserva);
-				}
-				return registroTotal;
-
+				return listaReserva;
 			} else {
 				// if(cpf.length()!=11) {
 				// throw new Exception("CPF deve conter 11 dígitos");
@@ -264,12 +258,7 @@ public class Excursao {
 	public ArrayList<String> listarReservasPorNome(String nome) throws Exception {
 		if (!listaReserva.isEmpty()) {
 			if (nome.length() == 0) {
-				ArrayList<String> registroTotal = new ArrayList<String>();
-				for (int i = 0; i < listaReserva.size(); i++) {
-					String reserva = listaReserva.get(i);
-					registroTotal.add(reserva);
-				}
-				return registroTotal;
+				return listaReserva;
 			} else {
 				ArrayList<String> registrosEncontrados = new ArrayList<String>();
 
