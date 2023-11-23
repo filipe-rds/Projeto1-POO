@@ -10,7 +10,7 @@
 </div>
 <div style="display: inline_block" ><br>
     <h3>📘 Objetivo:</h3>
-    <p>Construir um sistema de excursões que respeite as <a href="https://github.com/filipe-rds/Projeto1-POO/blob/main/assets/POO-projeto1-2023.2.pdf">regras de negócio</a> estabelecidas previamente para o projeto e que seja capaz de armazenar os dados obtidos em um banco de dados em forma de arquivo.</p>
+    <p>Construir um sistema de excursões que respeite as <a href="https://github.com/filipe-rds/Projeto1-POO/blob/main/assets/POO-projeto1-2023.2.pdf">regras de negócio</a> estabelecidas previamente para o projeto e que seja capaz de armazenar as informações obtidas em um banco de dados em forma de arquivo.</p>
 </div>
 
 <div style="display: inline_block" ><br>
